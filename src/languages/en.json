@@ -1,0 +1,261 @@
+{
+  "site": {
+    "title": "Jinan Jun Dao Xin Medical Devices Co., Ltd.",
+    "logoAlt": "Logo",
+    "description": "A small demo of i18n with Next.js"
+  },
+  "nav": {
+    "search": "Search..."
+  },
+  "footer": {
+    "contact": {
+      "title": "Contact Us",
+      "list": [
+        { "icon": "/weixin.svg", "info": "jundaoxin001" },
+        { "icon": "/qq.svg", "info": "32430650" },
+        { "icon": "/phone.svg", "info": "18615603399" },
+        {
+          "icon": "/address.svg",
+          "info": "No. 502, 1-2 Floor, Science and Technology Center, Zhangjin Comprehensive Bonded Zone, South Road 99, Hongxing 2nd Road, Jinan Area, Shandong Province, China"
+        }
+      ]
+    },
+    "icp_license": "ICP License: 鲁ICP备16032279号",
+    "police_title": "Public Security Record: ",
+    "police_license": "鲁公网安备37011202002462号",
+    "service_license": "Internet Pharmaceutical Information Service Qualification Certificate: （鲁）-非经营性-2025-0014"
+  },
+  "home": {
+    "title": "Home",
+    "one": {
+      "title": "With a focus on health, and with technology as the foundation, we pursue our dreams.",
+      "description": [
+        "From the conceptual design of the product to the precise manufacturing process, we always take 'accuracy' as the highest principle. Every structure, every material, and every process has been meticulously examined and repeatedly verified, solely to ensure that at critical moments on the operating table and in the clinic, we can truly safeguard the life and health of patients, and provide doctors with greater confidence in their profession, which is more solid and reliable.",
+        "We are committed to developing high-performance and highly stable medical device products. With rigorous data support, rapid response speed and consistent stable performance, we provide efficient and precise technical assistance for clinical diagnosis and treatment processes. This enables doctors to quickly obtain key information in complex medical environments and make more scientific and accurate judgments, thereby improving the overall quality of diagnosis and treatment."
+      ]
+    },
+    "two": {
+      "description": [
+        "Jinan Jun Dao Xin Medical Devices Co., Ltd. was established in 2015. Since its inception, the company has been guided by the international advanced medical device research and development concepts, deeply engaged in the Chinese medical market, and continuously promoting technological innovation and industrial upgrading. The company has always attached great importance to the integrated development of industry, academia and research, and has established stable and in-depth cooperation mechanisms with many well-known domestic universities, research institutes and large tertiary hospitals. Through joint research and development, clinical verification, and technology transfer and other methods, it continuously enhances its technological innovation capabilities.",
+        "The company focuses on the high-end medical device field, with its product range covering key medical scenarios such as diagnosis, monitoring, and treatment, and is widely used in various departments including surgery, emergency care, critical care medicine, anesthesia, and rehabilitation. Relying on a professional R&D team, advanced manufacturing system, and strict quality management process, the company fully complies with domestic and international industry standards and has established a full life cycle quality control system from design, testing, mass production to after-sales service, ensuring that each product has high safety, stability, and clinical reliability.",
+        "Over the years, Jun Daoxin has consistently adhered to the development philosophy of 'enabling medical care through technology and safeguarding health through quality', providing medical staff with more scientific and efficient diagnostic tools, and bringing patients a safer and more comfortable treatment experience. In the future, the company will continue to promote technological innovation and industrial upgrading, providing more valuable medical device solutions for the industry, and helping China's medical cause to continue to progress."
+      ],
+      "shows": [
+        {
+          "image": "/lishixiao.svg",
+          "num": 2015,
+          "unit": "Year",
+          "description": "Date of establishment"
+        },
+        {
+          "image": "/diqu.svg",
+          "num": 34,
+          "unit": "+",
+          "description": "Sales coverage area"
+        },
+        {
+          "image": "/shebei.svg",
+          "num": 1000,
+          "unit": "+",
+          "description": "Production equipment"
+        },
+        {
+          "image": "/microscope.svg",
+          "num": 5,
+          "unit": "+",
+          "description": "R&D Laboratories"
+        }
+      ]
+    },
+    "three": {
+      "title": "Featured Products",
+      "description": "Explore our selection of high-quality medical devices, supporting every critical moment in clinical diagnosis and treatment."
+    },
+    "four": {
+      "title": "The Latest",
+      "description": "Real-time collection of regulatory updates, policy interpretations and centralized procurement information in the medical device industry, helping industry practitioners grasp key information at the earliest possible time."
+    }
+  },
+  "product": {
+    "title": "Products",
+    "description-1": "Explore our comprehensive product portfolio",
+    "description-2": "Covering the complete treatment process for many diseases around the world",
+    "classify": [
+      {
+        "id": 1,
+        "label": "Nursing & Patient Transfer",
+        "href": "/en/products/1",
+        "description": "Provides comprehensive solutions for patient movement, positioning, and nursing assistance. Designed to reduce the workload of caregivers while enhancing safety and comfort during patient transfers in wards, emergency departments, and operating rooms."
+      },
+      {
+        "id": 2,
+        "label": "Anesthesia & Airway Management",
+        "href": "/en/products/2",
+        "description": "Essential devices for establishing, securing, and maintaining a clear airway during surgery and emergency care. These products emphasize speed, safety, and stability, ensuring reliable performance throughout anesthesia and respiratory support procedures."
+      },
+      {
+        "id": 3,
+        "label": "Surgery & Endoscopy",
+        "href": "/en/products/3",
+        "description": "Covers a wide range of disposable instruments and auxiliary tools used in open and minimally invasive procedures, including cutting, puncture, drainage, and tissue handling. Products focus on precision, convenience, and minimally invasive operation to support surgeons effectively."
+      },
+      {
+        "id": 4,
+        "label": "Proctology Instruments",
+        "href": "/en/products/4",
+        "description": "Designed for the clinical treatment of hemorrhoids, anal fissures, and other anorectal conditions. These instruments are simple, safe, and easy to operate, improving efficiency in both outpatient and surgical workflows while supporting various minimally invasive techniques."
+      },
+      {
+        "id": 5,
+        "label": "Urology Instruments",
+        "href": "/en/products",
+        "description": "Dedicated to the diagnosis and treatment of urinary system diseases. This category includes tools for urinary management, tissue handling, and minimally invasive procedures. Products prioritize comfort, reliability, and non-invasiveness to meet the diverse needs of urology practices."
+      }
+    ],
+    "featured": [
+      {
+        "id": 1,
+        "category_id": 2,
+        "name": "Disposable Circumcision Stapler - Innovative Version",
+        "description": "The main function of the circumcision stapler is to replace traditional manual suturing. It automatically completes the anastomosis while removing excess foreskin through the synergistic action of the built-in circular knife and anastomotic nails. Its design simulates the principle of a stapler, using titanium or stainless steel nails to fix the tissue, ensuring a tight and appropriately tight anastomosis, reducing postoperative bleeding and infection risks. For example, the circumcision stapler controls the cutting depth by adjusting the knob, and achieves safe and controllable surgical operation with the insurance block and movable handle.",
+        "href": "/images/products/1.webp"
+      },
+      {
+        "id": 2,
+        "category_id": 2,
+        "name": "Disposable Circumcision Stapler - Standard Version",
+        "description": "The main function of the circumcision stapler is to replace traditional manual suturing. It automatically completes the anastomosis while removing excess foreskin through the synergistic action of the built-in circular knife and anastomotic nails. Its design simulates the principle of a stapler, using titanium or stainless steel nails to fix the tissue, ensuring a tight and appropriately tight anastomosis, reducing postoperative bleeding and infection risks. For example, the circumcision stapler controls the cutting depth by adjusting the knob, and achieves safe and controllable surgical operation with the insurance block and movable handle.",
+        "href": "/images/products/2.webp"
+      },
+      {
+        "id": 3,
+        "category_id": 3,
+        "name": "Disposable Trocar Instruments",
+        "description": "Disposable laparoscopic trocars and sets are specialized instruments used to establish surgical access channels during laparoscopic surgery. The product creates a passage through the abdominal wall with the puncture head, allowing laparoscopes and surgical instruments to enter the abdominal cavity smoothly. This product is suitable for various endoscopic surgeries in general surgery, gynecology, urology, and other fields. It is a single-use medical device that avoids infection risks caused by repeated sterilization, improving surgical efficiency and safety.",
+        "href": "/images/products/3.webp"
+      },
+      {
+        "id": 4,
+        "category_id": 4,
+        "name": "Disposable Hemorrhoid Ligator",
+        "description": "Disposable hemorrhoid ligators are minimally invasive surgical instruments specifically designed for the treatment of hemorrhoids. They use mechanical ligation and anastomosis techniques to precisely block the blood supply to hemorrhoidal tissue, promoting ischemic necrosis and natural shedding, while simultaneously restoring the normal anatomical structure of the anus. These instruments combine the dual functions of ligation and anastomosis, offering advantages such as ease of operation, minimal trauma, and rapid recovery. They are widely used in the treatment of internal hemorrhoids, mixed hemorrhoids, and certain rectal lesions.",
+        "href": "/images/products/4.webp"
+      },
+      {
+        "id": 5,
+        "category_id": 1,
+        "name": "Patient Transfer Slide Sheet",
+        "description": "This product changes the traditional patient transfer (bed transfer) method, saving time and effort, being convenient and fast, and does not cause twisting of the patient's limbs, thereby avoiding surgical wound tearing, spinal injury, fracture end displacement, thrombosis shedding, and secondary injury caused by improper transfer methods.",
+        "href": "/images/products/5.webp"
+      },
+      {
+        "id": 6,
+        "category_id": 2,
+        "name": "Endotracheal Tube Fixator",
+        "description": "An auxiliary device used to assist patients in opening their mouths during surgery or examination. It consists of a catheter fixator, a skin isolation pad, and an adjustable neck strap. The catheter fixator is made of polypropylene, the skin isolation pad is made of hydrocolloid material, and the adjustable neck strap is made of nylon webbing.",
+        "href": "/images/products/6.webp"
+      }
+    ],
+    "more": "Learn more"
+  },
+  "about": {
+    "title": "About US"
+  },
+  "new": {
+    "title": "News",
+    "description-1": "Stay informed with real-time updates on medical device regulations, policy insights, and procurement developments",
+    "description-2": "Authoritative announcements, standards, and reimbursement updates to help businesses navigate market and compliance changes",
+    "classify": [
+      {
+        "label": "Regulatory Announcements",
+        "href": "/zh-CN/news",
+        "description": "Provides timely updates on official notices, regulatory bulletins, and industry announcements issued by authorities. Helps organizations stay aligned with the latest compliance requirements and policy changes."
+      },
+      {
+        "label": "Regulations & Standards",
+        "href": "/zh-CN/news",
+        "description": "Includes national and industry-level regulations, technical standards, and guidance documents for medical devices. Serves as a reliable reference for R&D, manufacturing, and regulatory teams to ensure full compliance."
+      },
+      {
+        "label": "Policy Insights & Industry Analysis",
+        "href": "/zh-CN/news",
+        "description": "Offers professional interpretations of newly released policies along with in-depth industry insights. Helps companies understand policy impacts, identify key trends, and navigate the evolving regulatory landscape."
+      },
+      {
+        "label": "Procurement Updates & Tender Results",
+        "href": "/zh-CN/news",
+        "description": "Covers centralized procurement announcements, bidding results, and procurement-related policy updates. Supports businesses in tracking market opportunities and preparing for tender participation with up-to-date information."
+      },
+      {
+        "label": "Reimbursement Policies & Fee Schedules",
+        "href": "/zh-CN/news",
+        "description": "Provides updates on reimbursement policies, fee schedule changes, and medical insurance inclusion guidelines. Helps companies understand market access requirements and the financial implications of product reimbursement."
+      }
+    ],
+    "featured": [
+      {
+        "id": 1,
+        "title": "The company successfully held the 2024 Medical Device Exhibition",
+        "date": "2024-05-15",
+        "summary": "This exhibition gathered many leading companies in the industry, showcasing the latest medical device technologies and products, promoting industry exchange and cooperation."
+      },
+      {
+        "id": 2,
+        "title": "New product obtained national medical device registration certificate",
+        "date": "2024-04-10",
+        "summary": "Our newly developed disposable foreskin cutting stapler successfully obtained the national medical device registration certificate, marking an important step forward for the company in the field of innovative medical devices."
+      },
+      {
+        "id": 3,
+        "title": "Strategic cooperation reached with well-known hospitals",
+        "date": "2024-03-20",
+        "summary": "Our company has established strategic cooperation with several well-known hospitals, promoting the clinical application and innovative development of medical device technology."
+      },
+      {
+        "id": 4,
+        "title": "The company was awarded the title of 'Excellent Medical Device Enterprise'",
+        "date": "2024-02-15",
+        "summary": "The company was awarded the title of 'Excellent Medical Device Enterprise' by authoritative industry organizations, further enhancing its brand influence."
+      },
+      {
+        "id": 5,
+        "title": "Launched a new round of R&D projects focusing on smart medical devices",
+        "date": "2024-01-30",
+        "summary": "The company announced the launch of a new round of R&D projects, focusing on the field of smart medical devices, aiming to promote the intelligent and digital transformation of medical technology."
+      },
+      {
+        "id": 6,
+        "title": "The company passed the ISO 13485 quality management system certification",
+        "date": "2024-01-10",
+        "summary": "Our company successfully passed the ISO 13485 quality management system certification, further improving product quality management levels and ensuring the provision of high-quality medical devices to customers."
+      },
+      {
+        "id": 7,
+        "title": "The company held the first employee skills competition to stimulate innovation vitality",
+        "date": "2024-05-01",
+        "summary": "The company successfully held the first employee skills competition, aiming to stimulate employees' innovative vitality and professional skills, promoting the sustainable development of the enterprise."
+      },
+      {
+        "id": 8,
+        "title": "The company's website was newly launched, enhancing user experience",
+        "date": "2024-04-05",
+        "summary": "Our company's newly redesigned website was officially launched, optimizing the user interface and functional design to enhance the browsing and usage experience for customers."
+      },
+      {
+        "id": 9,
+        "title": "Participated in public welfare medical projects to contribute to the construction of Healthy China",
+        "date": "2024-03-12",
+        "summary": "The company actively participated in multiple public welfare medical projects, aiming to improve primary healthcare services and contribute to the construction of Healthy China."
+      },
+      {
+        "id": 10,
+        "title": "The company's annual financial report was released, showing steady growth",
+        "date": "2024-02-28",
+        "summary": "Our company released the 2023 annual financial report, showing steady growth in the past year, with business expansion and market share improvement."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact US"
+  }
+}

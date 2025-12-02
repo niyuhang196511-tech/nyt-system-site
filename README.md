@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MediTech Global - Next.js App Router Prototype
 
-## Getting Started
+这是为医疗器械公司设计的 Next.js (app-router) 原型，内置多语言/国家化（en / zh-CN / fr）、响应式布局与示例页面，包含：
 
-First, run the development server:
+-   首页、产品页、产品详情页、新闻列表、新闻详情、关于我们、联系我们
+-   国际化路由：/en, /zh-CN, /fr
+-   中间件会根据浏览器首选语言自动重定向到对应 locale
+-   Tailwind CSS + 基础品牌样式
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+启动步骤（示例）：
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. 初始化项目并安装依赖（Next.js 13+ / Tailwind）：
+    - yarn create next-app --experimental-app
+    - 或使用 npm init
+2. 安装 Tailwind:
+    - yarn add -D tailwindcss postcss autoprefixer
+    - npx tailwindcss init -p
+3. 将本仓库文件放入项目对应位置（app、components、locales、middleware.ts 等）
+4. 运行：
+    - yarn dev 或 npm run dev
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+后续建议：
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-   将 mock 数据替换为真实 API（products/news）
+-   国际化：使用 next-intl / react-intl 进行丰富的翻译、日期/货币格式化
+-   为不同国家提供合规页（法规、证书、资质）和国家化联系方式
+-   SEO：为每个 locale 生成 hreflang、sitemap、多语言 meta
+-   性能：图片使用 next/image、开启 ISR 或 SSG（根据产品和新闻）
+-   可增加 A/B 测试、多语言版本的审计/翻译工作流（Crowdin、Transifex）
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+如果你希望我把这些文件直接打包成 GitHub 仓库并为你创建初始 PR，我可以继续（需要你提供目标仓库信息）。若要我改用 next-intl 或加入真实 API 示例、或把语言切换深度改为保留路径（在 ProductCard/NewsCard 中动态生成 locale 链接），告诉我你的优先项，我会接着实现。
