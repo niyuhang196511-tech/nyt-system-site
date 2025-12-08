@@ -13,6 +13,7 @@
       "list": [
         { "icon": "/weixin.svg", "info": "jundaoxin001" },
         { "icon": "/qq.svg", "info": "32430650" },
+        { "icon": "/specialplane.svg", "info": "+86 3994249894" },
         { "icon": "/phone.svg", "info": "18615603399" },
         {
           "icon": "/address.svg",
@@ -27,231 +28,287 @@
   },
   "home": {
     "title": "首页",
-    "one": {
+    "heroBanner": {
       "title": "以健康为本，以科技为基，追求梦想",
-      "description": [
+      "descriptions": [
         "从产品的概念设计到精密生产的每一个环节，我们都以“精准”作为最高准则。每一处结构、每一项材料、每一道工序，都经过严密推敲与反复验证，只为确保在手术台和诊室的关键时刻，能够真正守护患者的生命健康，赋予医生更加坚定与可靠的专业信心。",
         "我们致力于打造高性能、高稳定性的医疗器械产品，以严谨的数据支持、敏捷的响应速度和持续稳定的表现，为临床诊疗流程提供高效、精准的技术助力。让医生在复杂的医疗环境中能够更快速获取关键信息，做出更科学、更准确的判断，从而提升整体诊疗质量。"
       ]
     },
-    "two": {
-      "description": [
-        "济南君道信医疗器械有限公司成立于2015年，自创立之初便坚持以国际前沿的医疗器械研发理念为指导，深耕中国医疗市场，不断推动技术创新与产业升级。公司始终重视产学研一体化发展，与多所国内知名高校、科研院所及大型三甲医院建立了稳固而深入的合作机制，通过联合研发、临床验证、成果转化等方式，持续增强技术创新能力。",
-        "公司专注于高端医疗器械领域，产品体系覆盖诊断、监护、治疗等关键医疗场景，广泛应用于外科、急救、重症医学、麻醉、康复等多种科室。依托专业的研发团队、先进的制造体系以及严格的质量管理流程，公司全面遵循国内外行业标准，构建了从设计、试验、量产到售后服务的全生命周期质量管控体系，确保每一款产品都具备高安全性、高稳定性和临床可靠性。",
-        "多年来，君道信始终坚持“以技术赋能医疗、以品质守护健康”的发展理念，为医护人员提供更科学、更高效的诊疗工具，为患者带来更安全、更舒适的治疗体验。未来，公司将继续推动技术创新与产业升级，为行业输出更具价值的医疗器械解决方案，助力中国医疗事业的持续进步。"
-      ],
-      "shows": [
-        {
-          "image": "/lishixiao.svg",
-          "num": 2015,
-          "unit": "年",
-          "description": "成立时间"
-        },
-        {
-          "image": "/diqu.svg",
-          "num": 34,
-          "unit": "+",
-          "description": "覆盖销售地区"
-        },
-        {
-          "image": "/shebei.svg",
-          "num": 1000,
-          "unit": "+",
-          "description": "拥有生产设备"
-        },
-        {
-          "image": "/microscope.svg",
-          "num": 5,
-          "unit": "+",
-          "description": "研发实验室"
-        }
-      ]
-    },
-    "three": {
+
+    "featuredProducts": {
       "title": "推荐产品",
       "description": "探索我们精选的高品质医疗器械产品，助力临床诊疗的每一个关键时刻。"
     },
-    "four": {
+    "latestNews": {
       "title": "最新资讯",
-      "description": "实时汇聚医疗器械行业的法规动态、政策解读与集采信息，帮助行业从业者第一时间掌握关键资讯。"
+      "description": "实时汇聚医疗器械行业的法规动态、政策解读与集采信息，帮助行业从业者第一时间掌握关键资讯。",
+      "cover": "/images/message-banner.webp"
     }
   },
   "product": {
     "title": "产品",
     "description-1": "探索我们全面的产品组合",
     "description-2": "涵盖世界上许多疾病的完整治疗过程",
-    "classify": [
+    "category": [
       {
         "id": 1,
-        "label": "护理与转运",
-        "href": "/zh-CN/products/1",
+        "name": "护理与转运",
         "description": "提供全面的患者移动、定位和护理辅助解决方案。旨在减轻护理人员的工作负担，同时在病房、急诊科和手术室的患者转运过程中增强安全性和舒适性。"
       },
       {
         "id": 2,
-        "label": "麻醉与气道管理",
-        "href": "/zh-CN/products/2",
+        "name": "麻醉与气道管理",
         "description": "用于手术和急救过程中建立、固定和维持气道通畅的关键设备。这些产品强调速度、安全性和稳定性，确保麻醉和呼吸支持过程中的可靠性能。"
       },
       {
         "id": 3,
-        "label": "手术与内窥镜",
-        "href": "/zh-CN/products/3",
+        "name": "手术与内窥镜",
         "description": "涵盖用于开放和微创手术的各种一次性器械和辅助工具，包括切割、穿刺、引流和组织处理。产品注重精确、便捷和微创操作，有效支持外科医生。"
       },
       {
         "id": 4,
-        "label": "肛肠器械",
-        "href": "/zh-CN/products/4",
+        "name": "肛肠器械",
         "description": "专为痔疮、肛裂及其他肛肠疾病的临床治疗设计。这些器械操作简单、安全，提升门诊及手术流程效率，同时支持多种微创技术。"
       },
       {
         "id": 5,
-        "label": "泌尿器械",
-        "href": "/zh-CN/products/5",
+        "name": "泌尿器械",
         "description": "专注于尿路系统疾病的诊断和治疗。该类别包括尿液管理、组织处理和微创手术的工具。产品优先考虑舒适性、可靠性和非侵入性，以满足泌尿科实践的多样化需求。"
       }
     ],
     "featured": [
       {
         "id": 1,
-        "category_id": 2,
+        "categoryId": 5,
         "name": "一次性使用包皮切割吻合器-创新版",
         "description": "包皮吻合器的主要功能是替代传统手工缝合，通过内置环形刀与吻合钉的协同作用，在切除过长包皮的同时，自动完成吻合操作。其设计模拟订书机原理，利用钛钉或不锈钢钉固定组织，确保吻合口严密、松紧适中，减少术后出血与感染风险。例如，包皮切割吻合器通过调节旋钮控制切割深度，配合保险块与活动手柄，实现安全、可控的手术操作。",
-        "href": "/images/products/1.webp"
+        "cover_image": "/images/products/1.webp",
+        "cover_video": "/images/products/videos/1.mp4"
       },
       {
         "id": 2,
-        "category_id": 2,
+        "categoryId": 5,
         "name": "一次性使用包皮切割吻合器-标准版",
         "description": "包皮吻合器的主要功能是替代传统手工缝合，通过内置环形刀与吻合钉的协同作用，在切除过长包皮的同时，自动完成吻合操作。其设计模拟订书机原理，利用钛钉或不锈钢钉固定组织，确保吻合口严密、松紧适中，减少术后出血与感染风险。例如，包皮切割吻合器通过调节旋钮控制切割深度，配合保险块与活动手柄，实现安全、可控的手术操作。",
-        "href": "/images/products/2.webp"
+        "cover_image": "/images/products/2.webp",
+        "cover_video": "/images/products/videos/2.mp4"
       },
       {
         "id": 3,
-        "category_id": 3,
+        "categoryId": 3,
         "name": "套管穿刺器械",
         "description": "一次性使用腹腔镜用穿刺器及套装是一种用于腹腔镜手术中建立手术入路通道的专用器械。产品通过穿刺头在腹壁形成通道，使腹腔镜、手术器械等能够顺利进入腹腔。该产品适用于普外科、妇科、泌尿外科等各类腔镜手术，一次性使用医疗器械，避免重复灭菌造成的感染风险，提升手术效率与安全性。",
-        "href": "/images/products/3.webp"
+        "cover_image": "/images/products/3.webp",
+        "cover_video": "/images/products/videos/3.mp4"
       },
       {
         "id": 4,
-        "category_id": 4,
+        "categoryId": 4,
         "name": "一次性使用痔疮套扎器",
         "description": "一次性使用痔疮套扎吻合器是一种专为痔疮治疗设计的微创手术器械，通过机械性套扎与吻合技术，精准阻断痔核血供，促进其缺血坏死并自然脱落，同时重建肛门正常解剖结构。该器械结合了套扎与吻合的双重功能，具有操作简便、创伤小、恢复快等优势，广泛应用于内痔、混合痔及部分直肠病变的治疗。",
-        "href": "/images/products/4.webp"
+        "cover_image": "/images/products/4.webp",
+        "cover_video": "/images/products/videos/4.mp4"
       },
       {
         "id": 5,
-        "category_id": 1,
+        "categoryId": 1,
         "name": "移动滑垫",
         "description": "本产品改变了传统的病人转移(过床)方式，省时省力，方便快捷，不会导致病人肢体扭曲，从而避免了由于转移方式不当可能会造成的手术伤口撕裂、脊椎损伤、骨折断端移位、血栓脱落二次损伤。",
-        "href": "/images/products/5.webp"
+        "cover_image": "/images/products/5.webp",
+        "cover_video": "/images/products/videos/5.mp4"
       },
       {
         "id": 6,
-        "category_id": 2,
+        "categoryId": 2,
         "name": "气管插管固定器",
         "description": "手术或者检查时候患者开口的辅助器械，由导管固定器、皮肤隔离垫、可调节颈带组成。其中，导管固定器为聚丙烯材料，皮肤隔离垫为水胶体材料，可调节颈带为尼龙织带。",
-        "href": "/images/products/6.webp"
+        "cover_image": "/images/products/6.webp",
+        "cover_video": "/images/products/videos/6.mp4"
       }
     ],
     "more": "查看更多信息"
   },
   "about": {
-    "title": "关于我们"
+    "title": "关于我们",
+    "heroBanner": {
+      "title": "业务覆盖34+地区",
+      "subtitle": "覆盖全国主要城市，连接山东与各地的业务网络"
+    },
+    "descriptions": [
+      "济南君道信医疗器械有限公司成立于2015年，自创立之初便坚持以国际前沿的医疗器械研发理念为指导，深耕中国医疗市场，不断推动技术创新与产业升级。公司始终重视产学研一体化发展，与多所国内知名高校、科研院所及大型三甲医院建立了稳固而深入的合作机制，通过联合研发、临床验证、成果转化等方式，持续增强技术创新能力。",
+      "公司专注于高端医疗器械领域，产品体系覆盖诊断、监护、治疗等关键医疗场景，广泛应用于外科、急救、重症医学、麻醉、康复等多种科室。依托专业的研发团队、先进的制造体系以及严格的质量管理流程，公司全面遵循国内外行业标准，构建了从设计、试验、量产到售后服务的全生命周期质量管控体系，确保每一款产品都具备高安全性、高稳定性和临床可靠性。",
+      "多年来，君道信始终坚持“以技术赋能医疗、以品质守护健康”的发展理念，为医护人员提供更科学、更高效的诊疗工具，为患者带来更安全、更舒适的治疗体验。未来，公司将继续推动技术创新与产业升级，为行业输出更具价值的医疗器械解决方案，助力中国医疗事业的持续进步。"
+    ],
+    "strengths": [
+      {
+        "icon": "/lishixiao.svg",
+        "quantity": 2015,
+        "unit": "年",
+        "description": "成立时间"
+      },
+      {
+        "icon": "/diqu.svg",
+        "quantity": 34,
+        "unit": "+",
+        "description": "覆盖销售地区"
+      },
+      {
+        "icon": "/shebei.svg",
+        "quantity": 1000,
+        "unit": "+",
+        "description": "拥有生产设备"
+      },
+      {
+        "icon": "/microscope.svg",
+        "quantity": 5,
+        "unit": "+",
+        "description": "研发实验室"
+      }
+    ]
   },
   "new": {
     "title": "新闻",
     "description-1": "实时汇聚医疗器械行业的法规动态、政策解读与集采信息，帮助行业从业者第一时间掌握关键资讯。",
     "description-2": "以权威视角呈现最新公告、标准与医保更新，助力企业精准应对市场与监管变化",
-    "classify": [
+    "category": [
       {
-        "label": "行业公告与发布",
-        "href": "/zh-CN/news",
+        "id": 1,
+        "name": "行业公告与发布",
         "description": "面向监管机构发布的最新公告、通知与行业动态，及时呈现政策变动与关键要求。帮助企业快速获取权威信息，明确合规方向。"
       },
       {
-        "label": "法规标准与文件",
-        "href": "/zh-CN/news",
+        "id": 2,
+        "name": "法规标准与文件",
         "description": "收录国家及行业层面的医疗器械法规、技术标准、指导原则等文件。为研发、生产与注册提供权威依据，支持企业合规化运营。"
       },
       {
-        "label": "政策解读与行业洞察",
-        "href": "/zh-CN/news",
+        "id": 3,
+        "name": "政策解读与行业洞察",
         "description": "结合政策发布，提供专业解读与趋势分析。以简明视角帮助企业理解政策影响，洞察行业发展方向与合规重点。"
       },
       {
-        "label": "集采动态与中标资讯",
-        "href": "/zh-CN/news",
+        "id": 4,
+        "name": "集采动态与中标资讯",
         "description": "关注国家及地方医疗器械集中采购信息、中标结果及最新采购政策。为企业提供市场变化参考，助力决策与投标工作。"
       },
       {
-        "label": "医保与收费目录",
-        "href": "/zh-CN/news",
+        "id": 5,
+        "name": "医保与收费目录",
         "description": "展示医保相关政策、收费目录更新和支付标准。帮助企业理解产品纳入医保后的流程与影响，为市场准入提供参考依据。"
       }
     ],
-    "featured": [
+    "latest": [
       {
         "id": 1,
-        "title": "公司成功举办2024年度医疗器械展览会",
+        "categoryId": 1,
+        "title": "新公司成功举办2024年医疗器械展览会",
+        "subject": "行业活动",
         "date": "2024-05-15",
-        "summary": "本次展览会汇聚了行业内众多领先企业，展示了最新的医疗器械技术和产品，促进了业内交流与合作。"
+        "author": "Nyh",
+        "views": 256,
+        "tags": ["展览会", "医疗器械", "行业"],
+        "cover": "/images/message-banner.webp",
+        "contentHtml": "<p>2024年5月10日至5月12日，我公司成功参加了在国家会展中心（上海）举办的2024年医疗器械展览会。展会期间，我们展示了最新的医疗器械产品和技术，吸引了众多行业专业人士和参观者的关注。</p><p>在展位上，我们的专业团队详细介绍并演示了产品，使参观者能够更深入地了解我们的技术创新和临床应用。我们还与行业专家和潜在合作伙伴进行了深入交流，探讨未来合作的可能性。</p><p>此次展会不仅提升了我公司在医疗器械行业的品牌影响力，也加强了与行业同仁的联系。我们将继续秉持创新与质量的承诺，为医疗界提供更优质的产品和服务。</p>",
+        "related": [2, 3, 4, 5, 6, 7, 8, 9, 10]
       },
       {
         "id": 2,
-        "title": "新产品获国家医疗器械注册证",
+        "categoryId": 2,
+        "views": 256,
+        "title": "新产品获得国家医疗器械注册证",
+        "subject": "产品新闻",
         "date": "2024-04-10",
-        "summary": "我司最新研发的一次性使用包皮切割吻合器成功获得国家医疗器械注册证，标志着公司在创新医疗器械领域迈出了重要一步。"
+        "author": "Nyh",
+        "tags": ["新产品", "医疗器械", "认证"],
+        "cover": "/images/message-banner.webp",
+        "contentHtml": "<p>我公司新研发的一次性使用包皮切割吻合器成功获得了国家医疗器械注册证，这标志着公司在创新医疗器械领域迈出了重要一步。</p><p>该产品旨在替代传统的手工缝合方法，为包皮环切手术提供一种更高效、更可靠的解决方案。该吻合器通过内置的环形刀和吻合钉，在切除多余包皮的同时，自动完成吻合操作，确保吻合口紧密且松紧适中，减少术后并发症的发生。</p><p>该产品的成功注册不仅展示了我公司强大的研发能力，也体现了我们致力于提供高质量、满足临床需求的医疗器械的承诺。我们将继续专注于创新与质量，努力为医疗服务提供者和患者带来更多先进的医疗解决方案。</p>",
+        "related": [1, 3, 4, 5, 6, 7, 8, 9, 10]
       },
       {
         "id": 3,
+        "categoryId": 3,
         "title": "与知名医院达成战略合作",
+        "subject": "合作伙伴",
         "date": "2024-03-20",
-        "summary": "我司与多家知名医院建立了战略合作关系，推动医疗器械技术的临床应用和创新发展。"
+        "author": "Nyh",
+        "views": 256,
+        "tags": ["合作", "医院", "医疗器械"],
+        "contentHtml": "<p>2024年5月10日至5月12日，我公司成功参加了在国家会展中心（上海）举办的2024年医疗器械展览会。展会期间，我们展示了最新的医疗器械产品和技术，吸引了众多行业专业人士和参观者的关注。</p><p>在展位上，我们的专业团队详细介绍并演示了产品，使参观者能够更深入地了解我们的技术创新和临床应用。我们还与行业专家和潜在合作伙伴进行了深入交流，探讨未来合作的可能性。</p><p>此次展会不仅提升了我公司在医疗器械行业的品牌影响力，也加强了与行业同仁的联系。我们将继续秉持创新与质量的承诺，为医疗界提供更优质的产品和服务。</p>"
       },
       {
         "id": 4,
-        "title": "公司荣获“优秀医疗器械企业”称号",
-        "date": "2024-02-15",
-        "summary": "公司凭借卓越的产品质量和创新能力，荣获行业内权威机构颁发的“优秀医疗器械企业”称号，进一步提升了品牌影响力。"
+        "categoryId": 4,
+        "title": "公司成功举办2024年医疗器械展览会",
+        "subject": "行业活动",
+        "date": "2024-05-15",
+        "author": "Nyh",
+        "views": 256,
+        "tags": ["展览会", "医疗器械", "行业"],
+        "cover": "/images/message-banner.webp",
+        "contentHtml": "<p>2024年5月10日至5月12日，我公司成功参加了在国家会展中心（上海）举办的2024年医疗器械展览会。展会期间，我们展示了最新的医疗器械产品和技术，吸引了众多行业专业人士和参观者的关注。</p><p>在展位上，我们的专业团队详细介绍并演示了产品，使参观者能够更深入地了解我们的技术创新和临床应用。我们还与行业专家和潜在合作伙伴进行了深入交流，探讨未来合作的可能性。</p><p>此次展会不仅提升了我公司在医疗器械行业的品牌影响力，也加强了与行业同仁的联系。我们将继续秉持创新与质量的承诺，为医疗界提供更优质的产品和服务。</p>",
+        "related": [2, 3, 4, 5, 6, 7, 8, 9, 10]
       },
       {
         "id": 5,
-        "title": "启动新一轮研发项目，聚焦智能医疗器械",
-        "date": "2024-01-30",
-        "summary": "公司宣布启动新一轮研发项目，重点聚焦智能医疗器械领域，致力于推动医疗技术的智能化和数字化转型。"
+        "categoryId": 5,
+        "views": 256,
+        "title": "新产品获得国家医疗器械注册证",
+        "subject": "产品新闻",
+        "date": "2024-04-10",
+        "author": "Nyh",
+        "tags": ["新产品", "医疗器械", "认证"],
+        "cover": "/images/message-banner.webp",
+        "contentHtml": "<p>Our newly developed disposable foreskin cutting stapler successfully obtained the national medical device registration certificate, marking an important step forward for the company in the field of innovative medical devices.</p><p>This product is designed to replace traditional manual suturing methods, providing a more efficient and reliable solution for circumcision procedures. The stapler utilizes a built-in circular knife and anastomotic nails to automatically complete the anastomosis while removing excess foreskin, ensuring a tight and secure closure that reduces postoperative complications.</p><p>The successful registration of this product not only demonstrates our company's strong R&D capabilities but also reflects our commitment to providing high-quality medical devices that meet clinical needs. We will continue to focus on innovation and quality, striving to bring more advanced medical solutions to healthcare providers and patients.</p>",
+        "related": [1, 3, 4, 5, 6, 7, 8, 9, 10]
       },
       {
         "id": 6,
-        "title": "公司通过ISO 13485质量管理体系认证",
-        "date": "2024-01-10",
-        "summary": "我司成功通过ISO 13485质量管理体系认证，进一步提升了产品质量管理水平，确保为客户提供高品质的医疗器械产品。"
+        "categoryId": 1,
+        "title": "与知名医院达成战略合作",
+        "subject": "合作伙伴",
+        "date": "2024-03-20",
+        "author": "Nyh",
+        "views": 256,
+        "tags": ["合作", "医院", "医疗器械"],
+        "contentHtml": "<p>2024年5月10日至5月12日，我公司成功参加了在国家会展中心（上海）举办的2024年医疗器械展览会。展会期间，我们展示了最新的医疗器械产品和技术，吸引了众多行业专业人士和参观者的关注。</p><p>在展位上，我们的专业团队详细介绍并演示了产品，使参观者能够更深入地了解我们的技术创新和临床应用。我们还与行业专家和潜在合作伙伴进行了深入交流，探讨未来合作的可能性。</p><p>此次展会不仅提升了我公司在医疗器械行业的品牌影响力，也加强了与行业同仁的联系。我们将继续秉持创新与质量的承诺，为医疗界提供更优质的产品和服务。</p>"
       },
       {
         "id": 7,
-        "title": "举办首届员工技能大赛，激发创新活力",
-        "date": "2024-05-01",
-        "summary": "公司成功举办首届员工技能大赛，旨在激发员工的创新活力和专业技能，推动企业持续发展。"
+        "categoryId": 2,
+        "title": "公司成功举办2024年医疗器械展览会",
+        "subject": "行业活动",
+        "date": "2024-05-15",
+        "author": "Nyh",
+        "views": 256,
+        "tags": ["展览会", "医疗器械", "行业"],
+        "cover": "/images/message-banner.webp",
+        "contentHtml": "<p>From May 10 to May 12, 2024, our company successfully participated in the 2024 Medical Device Exhibition held at the National Convention and Exhibition Center (Shanghai). During the exhibition, we showcased our latest medical device products and technologies, attracting widespread attention from industry professionals and visitors.</p><p>At the exhibition booth, our professional team provided detailed explanations and demonstrations of our products, allowing visitors to gain a deeper understanding of our technological innovations and clinical applications. We also engaged in in-depth discussions with industry experts and potential partners, exploring opportunities for future collaboration.</p><p>This exhibition not only enhanced our company's brand influence in the medical device industry but also strengthened our connections with industry peers. We will continue to uphold our commitment to innovation and quality, providing better products and services to the medical community.</p>",
+        "related": [2, 3, 4, 5, 6, 7, 8, 9, 10]
       },
       {
         "id": 8,
-        "title": "公司网站全新上线，提升用户体验",
-        "date": "2024-04-05",
-        "summary": "我司全新改版的网站正式上线，优化了用户界面和功能设计，提升了客户的浏览和使用体验。"
+        "categoryId": 3,
+        "views": 256,
+        "title": "新产品获得国家医疗器械注册证",
+        "subject": "产品新闻",
+        "date": "2024-04-10",
+        "author": "Nyh",
+        "tags": ["新产品", "医疗器械", "认证"],
+        "cover": "/images/message-banner.webp",
+        "contentHtml": "<p>Our newly developed disposable foreskin cutting stapler successfully obtained the national medical device registration certificate, marking an important step forward for the company in the field of innovative medical devices.</p><p>This product is designed to replace traditional manual suturing methods, providing a more efficient and reliable solution for circumcision procedures. The stapler utilizes a built-in circular knife and anastomotic nails to automatically complete the anastomosis while removing excess foreskin, ensuring a tight and secure closure that reduces postoperative complications.</p><p>The successful registration of this product not only demonstrates our company's strong R&D capabilities but also reflects our commitment to providing high-quality medical devices that meet clinical needs. We will continue to focus on innovation and quality, striving to bring more advanced medical solutions to healthcare providers and patients.</p>",
+        "related": [1, 3, 4, 5, 6, 7, 8, 9, 10]
       },
       {
         "id": 9,
-        "title": "参与公益医疗项目，助力健康中国建设",
-        "date": "2024-03-12",
-        "summary": "公司积极参与多项公益医疗项目，致力于提升基层医疗服务水平，助力健康中国建设。"
-      },
-      {
-        "id": 10,
-        "title": "公司年度财报发布，业绩稳步增长,公司年度财报发布，业绩稳步增长,公司年度财报发布，业绩稳步增长,公司年度财报发布，业绩稳步增长",
-        "date": "2024-02-28",
-        "summary": "我司发布了2023年度财报，显示公司在过去一年中实现了稳步增长，业务拓展和市场份额均有所提升。"
+        "categoryId": 1,
+        "title": "与知名医院达成战略合作",
+        "subject": "合作伙伴",
+        "date": "2024-03-20",
+        "author": "Nyh",
+        "views": 256,
+        "tags": ["合作", "医院", "医疗器械"],
+        "contentHtml": "<p>From May 10 to May 12, 2024, our company successfully participated in the 2024 Medical Device Exhibition held at the National Convention and Exhibition Center (Shanghai). During the exhibition, we showcased our latest medical device products and technologies, attracting widespread attention from industry professionals and visitors.</p><p>At the exhibition booth, our professional team provided detailed explanations and demonstrations of our products, allowing visitors to gain a deeper understanding of our technological innovations and clinical applications. We also engaged in in-depth discussions with industry experts and potential partners, exploring opportunities for future collaboration.</p><p>This exhibition not only enhanced our company's brand influence in the medical device industry but also strengthened our connections with industry peers. We will continue to uphold our commitment to innovation and quality, providing better products and services to the medical community.</p>"
       }
     ]
   },

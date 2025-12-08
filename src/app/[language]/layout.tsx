@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import { Language } from "@/types/language";
+import { NextIntlClientProvider } from "next-intl";
+import { getLanguage } from "@/lib/getLanguage";
 
 // export const dynamic = 'force-static'
 
@@ -33,17 +35,21 @@ export default async function LocaleLayout({
 }) {
   const { language } = await params;
 
+  const messages = (await import(`../../languages/${language}.json`)).default;
+
   return (
     <html lang={language} className={sourceHan.variable}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
-        <ThemeProvider>
-          <Header language={language as Language}></Header>
-          <main>{children}</main>
-          <Footer language={language as Language}></Footer>
-        </ThemeProvider>
+        <NextIntlClientProvider locale={language} messages={messages}>
+          <ThemeProvider>
+            <Header language={language as Language}></Header>
+            <main>{children}</main>
+            <Footer language={language as Language}></Footer>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

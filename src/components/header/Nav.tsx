@@ -13,9 +13,9 @@ import Link from "next/link";
 export default async function Nav({ language }: { language: Language }) {
   const dict = await getLanguage(language);
 
-  const productClassify = dict.product.classify;
+  const productCategory = dict.product.category;
 
-  const newClassify = dict.new.classify;
+  const newCategory = dict.new.category;
 
   return (
     <NavigationMenu className="hidden h-full flex-1 px-2 md:flex">
@@ -34,12 +34,12 @@ export default async function Nav({ language }: { language: Language }) {
         {/* 产品 */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className="h-16">
-            <NavigationMenuLink
+            {/* <NavigationMenuLink
               href={`/${language}/products`}
               title={dict.product.title}
-            >
-              {dict.product.title}
-            </NavigationMenuLink>
+            > */}
+            {dict.product.title}
+            {/* </NavigationMenuLink> */}
           </NavigationMenuTrigger>
           <NavigationMenuContent className="p-0">
             <div className="fixed top-16 right-0 left-0 z-10 w-screen bg-primary-foreground">
@@ -61,21 +61,17 @@ export default async function Nav({ language }: { language: Language }) {
 
                 {/* 产品列表 - 去掉列表标记并重置间距 */}
                 <ul className="m-0 grid flex-1 list-none grid-cols-2 gap-3 pl-0">
-                  {productClassify.map((item) => (
+                  {productCategory.map((item) => (
                     <li
-                      key={item.href ?? item.label}
+                      key={item.id}
                       className="group cursor-pointer rounded-xl p-4 transition-colors hover:bg-gray-50"
                     >
                       <Link
-                        href={
-                          item.href.startsWith("/")
-                            ? item.href
-                            : `/${item.href}`
-                        }
+                        href={`/${language}/products/${item.id}`}
                         className="no-underline"
                       >
                         <h4 className="text-xl font-semibold text-gray-900 transition-colors group-hover:text-primary">
-                          {item.label}
+                          {item.name}
                         </h4>
                         <p className="mt-1 text-sm leading-6 text-gray-600">
                           {item.description}
@@ -103,12 +99,12 @@ export default async function Nav({ language }: { language: Language }) {
         {/* 新闻资讯 */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className="h-16">
-            <NavigationMenuLink
+            {/* <NavigationMenuLink
               href={`/${language}/news`}
               title={dict.new.title}
-            >
-              {dict.new.title}
-            </NavigationMenuLink>
+            > */}
+            {dict.new.title}
+            {/* </NavigationMenuLink> */}
           </NavigationMenuTrigger>
           <NavigationMenuContent className="p-0">
             <div className="fixed top-16 right-0 left-0 z-10 w-screen bg-primary-foreground">
@@ -128,25 +124,21 @@ export default async function Nav({ language }: { language: Language }) {
 
                 {/* 新闻列表 - 去掉列表标记并重置间距 */}
                 <ul className="m-0 grid flex-1 list-none grid-cols-2 gap-3 pl-0">
-                  {newClassify.map((item) => (
+                  {newCategory.map((category) => (
                     <li
-                      key={item.href ?? item.label}
+                      key={category.id}
                       className="group cursor-pointer rounded-xl p-4 transition-colors hover:bg-gray-50"
                     >
                       <Link
-                        href={
-                          item.href.startsWith("/")
-                            ? item.href
-                            : `/${item.href}`
-                        }
+                        href={`/${language}/news#${category.id}`}
                         className="no-underline"
                       >
                         <h4 className="text-xl font-semibold text-gray-900 transition-colors group-hover:text-primary">
-                          {item.label}
+                          {category.name}
                         </h4>
                       </Link>
                       <p className="mt-1 text-sm leading-6 text-gray-600">
-                        {item.description}
+                        {category.description}
                       </p>
                     </li>
                   ))}

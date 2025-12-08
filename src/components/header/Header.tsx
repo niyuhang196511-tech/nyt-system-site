@@ -14,7 +14,7 @@ export default async function Header({ language }: IProps) {
   const dict = await getLanguage(language as Language);
 
   return (
-    <header className="sticky top-0 z-20 bg-white">
+    <header className="sticky top-0 z-50 bg-white">
       <section className="mx-auto flex h-16 items-center justify-between pr-2 pl-2 xl:container">
         <div className="flex shrink-0 items-center gap-x-2.5">
           <Image

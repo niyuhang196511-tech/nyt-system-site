@@ -1,15 +1,16 @@
 import { getLanguage } from "@/lib/getLanguage";
 import { Language } from "@/types/language";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Footer({ language }: { language: Language }) {
   const dict = await getLanguage(language);
 
   const contacts = dict.footer.contact.list;
 
-  const productClassify = dict.product.classify;
+  const productCategory = dict.product.category;
 
-  const newClassify = dict.new.classify;
+  const newCategory = dict.new.category;
 
   return (
     <footer className="bg-primary">
@@ -30,12 +31,14 @@ export default async function Footer({ language }: { language: Language }) {
           <div>
             <h3 className="mb-6 text-2xl">{dict.product.title}</h3>
             <ul className="flex flex-col gap-3">
-              {productClassify.map((classify, index) => (
+              {productCategory.map((category, index) => (
                 <li
                   key={index}
                   className="my-2 flex items-center gap-2 text-sm"
                 >
-                  {classify.label}
+                  <Link href={`${language}/products/${category.id}`}>
+                    {category.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -44,12 +47,14 @@ export default async function Footer({ language }: { language: Language }) {
           <div>
             <h3 className="mb-6 text-2xl">{dict.new.title}</h3>
             <ul className="flex flex-col gap-3">
-              {newClassify.map((classify, index) => (
+              {newCategory.map((category) => (
                 <li
-                  key={index}
+                  key={category.id}
                   className="my-2 flex items-center gap-2 text-sm"
                 >
-                  {classify.label}
+                  <Link href={`${language}/news#${category.id}`}>
+                    {category.name}
+                  </Link>
                 </li>
               ))}
             </ul>
