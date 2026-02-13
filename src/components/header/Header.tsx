@@ -1,17 +1,16 @@
-import { getLanguage } from "@/lib/getLanguage";
-import { Language } from "@/types/language";
+import { Locale } from "@/types/locale";
 import Image from "next/image";
 import LanguageSwitcher from "./LanguageSwitcher";
 import Nav from "./Nav";
-// import Search from "./Search";
 import HamburgerNav from "./HamburgerNav";
+import { getTranslations } from "next-intl/server";
 
 interface IProps {
-  language: Language;
+  locale: Locale;
 }
 
-export default async function Header({ language }: IProps) {
-  const dict = await getLanguage(language as Language);
+export default async function Header({ locale }: IProps) {
+  const siteDict = await getTranslations("site");
 
   return (
     <header className="sticky top-0 z-50 bg-white">
@@ -19,21 +18,21 @@ export default async function Header({ language }: IProps) {
         <div className="flex shrink-0 items-center gap-x-2.5">
           <Image
             src="/images/logo.webp"
-            alt={dict.site.logoAlt}
+            alt={siteDict("logoAlt")}
             width={36}
             height={36}
           />
           <h1 className="hidden text-2xl font-bold xl:block">
-            {dict.site.title}
+            {siteDict("title")}
           </h1>
         </div>
 
-        <Nav language={language as Language}></Nav>
+        <Nav locale={locale as Locale}></Nav>
 
         <div className="flex gap-x-1">
           {/* <Search /> */}
-          <LanguageSwitcher language={language as Language} />
-          <HamburgerNav language={language as Language}></HamburgerNav>
+          <LanguageSwitcher locale={locale as Locale} />
+          <HamburgerNav locale={locale as Locale}></HamburgerNav>
         </div>
       </section>
     </header>

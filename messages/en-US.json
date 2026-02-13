@@ -1,0 +1,120 @@
+{
+  "site": {
+    "title": "Jinan Jun Dao Xin Medical Devices Co., Ltd.",
+    "logoAlt": "Logo",
+    "description": "A small demo of i18n with Next.js"
+  },
+  "nav": {
+    "search": "Search...",
+    "hamburger-nav-title": "Navigation Menu",
+    "hamburger-nav-description": "Please select the content you want to view"
+  },
+  "footer": {
+    "contact": {
+      "title": "Contact Us"
+    },
+    "icp_license": "ICP License: 鲁ICP备16032279号",
+    "police_title": "Public Security Record: ",
+    "police_license": "鲁公网安备37011202002462号",
+    "service_license": "Internet Pharmaceutical Information Service Qualification Certificate: （鲁）-非经营性-2025-0014"
+  },
+  "home": {
+    "title": "Home",
+    "heroBanner": {
+      "title": "With a focus on health, and with technology as the foundation, we pursue our dreams.",
+      "description-1": "From the conceptual design of the product to the precise manufacturing process, we always take 'accuracy' as the highest principle. Every structure, every material, and every process has been meticulously examined and repeatedly verified, solely to ensure that at critical moments on the operating table and in the clinic, we can truly safeguard the life and health of patients, and provide doctors with greater confidence in their profession, which is more solid and reliable.",
+      "description-2": "We are committed to developing high-performance and highly stable medical device products. With rigorous data support, rapid response speed and consistent stable performance, we provide efficient and precise technical assistance for clinical diagnosis and treatment processes. This enables doctors to quickly obtain key information in complex medical environments and make more scientific and accurate judgments, thereby improving the overall quality of diagnosis and treatment."
+    },
+    "recommendProducts": {
+      "title": "Featured Products",
+      "description": "Explore our selection of high-quality medical devices, supporting every critical moment in clinical diagnosis and treatment."
+    },
+    "latestNews": {
+      "title": "The Latest",
+      "description": "Real-time collection of regulatory updates, policy interpretations and centralized procurement information in the medical device industry, helping industry practitioners grasp key information at the earliest possible time.",
+      "cover": "/images/message-banner.webp"
+    }
+  },
+  "product": {
+    "title": "Products",
+    "description-1": "Explore our comprehensive product portfolio",
+    "description-2": "Covering the complete treatment process for many diseases around the world",
+    "more": "Learn more"
+  },
+  "about": {
+    "title": "About US",
+    "heroBanner": {
+      "title": "The business covers 34 or more regions",
+      "subtitle": "The business network covers major cities across the country and connects Shandong with other regions"
+    },
+    "description-1": "Jinan Jun Dao Xin Medical Devices Co., Ltd. was established in 2015. Since its inception, the company has been guided by the international advanced medical device research and development concepts, deeply engaged in the Chinese medical market, and continuously promoting technological innovation and industrial upgrading. The company has always attached great importance to the integrated development of industry, academia and research, and has established stable and in-depth cooperation mechanisms with many well-known domestic universities, research institutes and large tertiary hospitals. Through joint research and development, clinical verification, and technology transfer and other methods, it continuously enhances its technological innovation capabilities.",
+    "description-2": "Over the years, Jun Daoxin has consistently adhered to the development philosophy of 'enabling medical care through technology and safeguarding health through quality', providing medical staff with more scientific and efficient diagnostic tools, and bringing patients a safer and more comfortable treatment experience. In the future, the company will continue to promote technological innovation and industrial upgrading, providing more valuable medical device solutions for the industry, and helping China's medical cause to continue to progress.",
+    "timeline": {
+      "title": "Development Milestone"
+    }
+  },
+  "news": {
+    "title": "News",
+    "description-1": "Stay informed with real-time updates on medical device regulations, policy insights, and procurement developments",
+    "description-2": "Helping industry practitioners grasp key information at the earliest possible time",
+    "input_placeholder": "Search news titles...",
+    "search": "Search",
+    "all-categories": "All",
+    "detail": "Read details",
+    "no_content": "All content loaded",
+    "views": "Views",
+    "copy_link": "Copy link",
+    "prev_article": "Previous",
+    "next_article": "Next",
+    "catalogue": "Catalogue",
+    "back_top": "Scroll to top",
+    "catalogue_empty": "No catalogue available",
+    "toc": "Related articles",
+    "toc_empty": "No related articles"
+  },
+  "contact": {
+    "title": "Contact US",
+    "weixin": "jundaoxin001",
+    "qq": "32430650",
+    "special_plane": "+86 3994249894",
+    "phone": "18615603399",
+    "address": "No. 502, 1-2 Floor, Science and Technology Center, Zhangjin Comprehensive Bonded Zone, South Road 99, Hongxing 2nd Road, Jinan Area, Shandong Province, China",
+    "qr_message": "Welcome to scan the QR code to follow our official WeChat account. We will continuously send you the latest product updates, function enhancements, event information and professional service contents, allowing you to obtain the first-hand information at any time and anywhere",
+    "qr_alt": "WeChat public account QR code",
+    "form": {
+      "title": "Leave us a message",
+      "description-1": "We have always been committed to providing high-quality products and services for doctors and patients. We sincerely hope to hear your opinions and suggestions, and we will reply to your inquiries as soon as possible. However, due to the large volume of online consultations, we may not be able to reply to you on the same day.",
+      "description-2": "If you wish to receive the feedback on the same day, you can contact us by calling the following number: (86)(21)38954600. Thank you for your understanding and support!",
+      "name": {
+        "label": "Name",
+        "placeholder": "Please enter your name",
+        "invalid": "Name is required"
+      },
+      "company": {
+        "label": "Company",
+        "placeholder": "Please enter your company name",
+        "invalid": "Company is required"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "Please enter your phone number",
+        "invalid": "Phone number is required"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "994727774@gemail.com",
+        "invalid": "Incorrect email format"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Please enter your message",
+        "invalid": "Message is required",
+        "maxLength": "Message cannot exceed 2000 characters"
+      },
+      "success": "Your message has been sent successfully!",
+      "error": "There was an error sending your message. Please try again later.",
+      "submit": "Sending Message",
+      "sending": "Sending..."
+    }
+  }
+}

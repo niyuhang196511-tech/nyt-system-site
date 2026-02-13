@@ -1,5 +1,5 @@
 // Root page: redirect to locale based on browser language
-import { Language } from "@/types/language";
+import { Locale } from "@/types/locale";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -8,7 +8,7 @@ export default async function RootPage() {
   const acceptLanguage = headersList.get("accept-language") || "";
 
   // Supported locales
-  const supportedLocales: Language[] = ["zh-CN", "en"];
+  const supportedLocales: Locale[] = ["zh-CN", "en-US"];
   const defaultLocale = "zh-CN";
 
   // Parse accept-language header to find best match
@@ -20,7 +20,7 @@ export default async function RootPage() {
   } else if (acceptLanguage.includes("zh")) {
     targetLocale = "zh-CN";
   } else if (acceptLanguage.includes("en")) {
-    targetLocale = "en";
+    targetLocale = "en-US";
   } else {
     // Try to find any supported locale in accept-language
     for (const locale of supportedLocales) {

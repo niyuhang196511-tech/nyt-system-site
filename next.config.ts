@@ -22,8 +22,27 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/media/:path*",
+        destination: `${process.env.NEXT_PUBLIC_MINIO_REMOTE}/:path*`,
+      },
+    ];
+  },
+  images: {
+    // dangerouslyAllowSVG: true,
+    // remotePatterns: [
+    //   {
+    //     protocol: "http",
+    //     hostname: "192.168.0.33",
+    //     port: "9000",
+    //     pathname: "/**",
+    //   },
+    // ],
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
 
-export default withNextIntl(nextConfig        );
+export default withNextIntl(nextConfig);

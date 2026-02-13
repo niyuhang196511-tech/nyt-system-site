@@ -1,4 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { Menu } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
+import gsap from "gsap";
+
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   Accordion,
@@ -6,120 +14,312 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
-import { Menu } from "lucide-react";
-import { Language } from "@/types/language";
-import { getLanguage } from "@/lib/getLanguage";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
-export default async function MobileMenu({ language }: { language: Language }) {
-  const dict = await getLanguage(language);
+import { Locale } from "@/types/locale";
+import { ProductCategory } from "@/types/product";
+import { getProductCategory } from "@/lib/product-category";
+import { NewsCategory } from "@/types/news";
+import { getNewsCategory } from "@/lib/news-category";
 
-  const productCategory = dict.product.category;
-  const newCategory = dict.new.category;
+interface IProps {
+  locale: Locale;
+}
+
+export default function MobileMenu({ locale }: IProps) {
+  const pathname = usePathname();
+
+  const tNav = useTranslations("nav");
+  const tHome = useTranslations("home");
+  const tProduct = useTranslations("product");
+  const tNews = useTranslations("news");
+  const tAbout = useTranslations("about");
+  const tContact = useTranslations("contact");
+
+  const [open, setOpen] = useState(false);
+  const [productLoading, setProductLoading] = useState(true);
+  const [productCategories, setProductCategories] = useState<ProductCategory[]>(
+    [],
+  );
+  const [newsLoading, setNewsLoading] = useState(true);
+  const [newsCategories, setNewsCategories] = useState<NewsCategory[]>([]);
+
+  const menuRef = useRef<HTMLUListElement>(null);
+
+  const closeMenu = useCallback(() => setOpen(false), []);
+
+  /* ---------------- 获取产品分类 ---------------- */
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchCategories() {
+      setProductLoading(true);
+      try {
+        const data = await getProductCategory(locale);
+        if (!cancelled) setProductCategories(data);
+      } finally {
+        if (!cancelled) setProductLoading(false);
+      }
+    }
+
+    fetchCategories();
+    return () => {
+      cancelled = true;
+    };
+  }, [locale]);
+
+  /* ---------------- 获取新闻资讯分类 ---------------- */
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchCategories() {
+      setNewsLoading(true);
+      try {
+        const data = await getNewsCategory(locale);
+        if (!cancelled) setNewsCategories(data);
+      } finally {
+        if (!cancelled) setNewsLoading(false);
+      }
+    }
+
+    fetchCategories();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [locale]);
+
+  /* ---------------- GSAP 菜单动画 ---------------- */
+  useEffect(() => {
+    if (!open || !menuRef.current) return;
+
+    gsap.fromTo(
+      menuRef.current.children,
+      { opacity: 0, y: 12 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.45,
+        stagger: 0.06,
+        ease: "power2.out",
+      },
+    );
+  }, [open]);
+
+  /* ---------------- 当前路由判断 ---------------- */
+  const isActive = (href: string) => {
+    if (href === pathname && href === `/${locale}`) {
+      return true;
+    } else if (href !== `/${locale}`) {
+      return pathname === href || pathname.startsWith(href + "/");
+    } else {
+      return false;
+    }
+  };
+
+  const productActive = pathname.startsWith(`/${locale}/products`);
+  const newsActive = pathname.startsWith(`/${locale}/news`);
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <button className="rounded-md p-2 hover:bg-accent md:hidden">
+        <button
+          aria-label="Open menu"
+          className="rounded-lg p-2 transition hover:bg-accent md:hidden"
+        >
           <Menu className="h-5 w-5" />
         </button>
       </SheetTrigger>
 
-      <SheetContent side="right" className="w-full max-w-sm">
-        {/* <SheetTitle className="text-2xl leading-12 pl-4 mb-0">
-                    菜单
-                </SheetTitle> */}
-        <ScrollArea className="h-full">
-          <nav>
-            <ul className="flex flex-col">
-              <li>
-                <Link
-                  href="/"
-                  className="block border-b px-4 py-4 text-base hover:bg-muted/50"
-                >
-                  {dict.home.title}
-                </Link>
-              </li>
+      <SheetContent side="right" className="w-full max-w-sm p-0">
+        {/* 标题区 */}
+        <div className="border-b px-5 py-6">
+          <div className="text-lg font-bold tracking-wide">
+            {tNav("hamburger-nav-title")}
+          </div>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {tNav("hamburger-nav-description")}
+          </p>
+        </div>
 
-              <li>
-                <Accordion type="single" collapsible defaultValue="products">
-                  <AccordionItem value="products">
-                    <AccordionTrigger className="flex w-full items-center justify-between border-b px-4 py-4">
-                      <span className="text-base">{dict.product.title}</span>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="flex flex-col gap-5 p-4">
-                        {productCategory.map((item) => {
-                          return (
-                            <li key={item.name}>
-                              <Link
-                                href={`/${language}/products/${item.id}`}
-                                className="text-base font-semibold text-gray-900 transition-colors group-hover:text-primary"
-                              >
-                                {item.name}
-                              </Link>
-                              <p className="mt-1 text-sm leading-6 text-gray-600">
-                                {item.description}
-                              </p>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </li>
+        <ScrollArea className="h-[calc(100vh-96px)]">
+          <nav className="px-2 py-4">
+            <ul ref={menuRef} className="space-y-1">
+              <NavItem
+                href={`/${locale}`}
+                active={isActive(`/${locale}`)}
+                onClick={closeMenu}
+              >
+                {tHome("title")}
+              </NavItem>
 
-              <li>
-                <Link
-                  href="/about"
-                  className="block border-b px-4 py-4 text-base hover:bg-muted/50"
-                >
-                  {dict.about.title}
-                </Link>
-              </li>
+              {/* 产品 */}
+              <Accordion
+                type="single"
+                collapsible
+                defaultValue={productActive ? "products" : undefined}
+              >
+                <AccordionItem value="products" className="border-none">
+                  <AccordionTrigger className="rounded-xl px-4 py-4 text-[17px] font-semibold hover:bg-slate-100">
+                    {tProduct("title")}
+                  </AccordionTrigger>
 
-              <li>
-                <Accordion type="single" collapsible defaultValue="news">
-                  <AccordionItem value="news">
-                    <AccordionTrigger className="flex w-full items-center justify-between border-b px-4 py-4">
-                      <span className="text-base">{dict.new.title}</span>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <ul className="flex flex-col gap-5 p-4">
-                        {newCategory.map((category) => {
-                          return (
-                            <li key={category.id}>
-                              <Link
-                                href={`/${language}/news#${category.id}`}
-                                className="text-base font-semibold text-gray-900 transition-colors group-hover:text-primary"
-                              >
-                                {category.name}
-                              </Link>
-                              <p className="mt-1 text-sm leading-6 text-gray-600">
-                                {category.description}
-                              </p>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </li>
+                  <AccordionContent>
+                    <ul className="mt-2 space-y-2 rounded-xl bg-slate-50 p-2">
+                      {productLoading
+                        ? Array.from({ length: 3 }).map((_, i) => (
+                            <Skeleton
+                              key={i}
+                              className="h-14 w-full rounded-lg"
+                            />
+                          ))
+                        : productCategories.map((item) => {
+                            const href = `/${locale}/products/${item.id}`;
+                            const active = pathname === href;
 
-              <li>
-                <Link
-                  href="/contact"
-                  className="block border-b px-4 py-4 text-base hover:bg-muted/50"
-                >
-                  {dict.contact.title}
-                </Link>
-              </li>
+                            return (
+                              <li key={item.id}>
+                                <Link
+                                  href={href}
+                                  onClick={closeMenu}
+                                  className={cn(
+                                    "block rounded-lg px-3 py-3 transition",
+                                    "hover:bg-white hover:shadow-sm",
+                                    active &&
+                                      "bg-white shadow-sm ring-1 ring-primary/20",
+                                  )}
+                                >
+                                  <div className="font-medium">{item.name}</div>
+                                  <p className="mt-1 text-sm text-slate-500">
+                                    {item.description}
+                                  </p>
+                                </Link>
+                              </li>
+                            );
+                          })}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
+              <NavItem
+                href={`/${locale}/about`}
+                active={isActive(`/${locale}/about`)}
+                onClick={closeMenu}
+              >
+                {tAbout("title")}
+              </NavItem>
+
+              {/* 新闻 */}
+              <Accordion
+                type="single"
+                collapsible
+                defaultValue={newsActive ? "news" : undefined}
+              >
+                <AccordionItem value="news" className="border-none">
+                  <AccordionTrigger className="rounded-xl px-4 py-4 text-[17px] font-semibold hover:bg-slate-100">
+                    {tNews("title")}
+                  </AccordionTrigger>
+
+                  <AccordionContent>
+                    <ul className="mt-2 space-y-2 rounded-xl bg-slate-50 p-2">
+                      {/* {newCategoriesConstants[locale].map((c) => (
+                        <li key={c.id}>
+                          <Link
+                            href={`/${locale}/news#${c.id}`}
+                            onClick={closeMenu}
+                            className="block rounded-lg px-3 py-3 transition hover:bg-white hover:shadow-sm"
+                          >
+                            <div className="font-medium">{c.name}</div>
+                            <p className="mt-1 text-sm text-slate-500">
+                              {c.description}
+                            </p>
+                          </Link>
+                        </li>
+                      ))} */}
+
+                      {newsLoading
+                        ? Array.from({ length: 3 }).map((_, i) => (
+                            <Skeleton
+                              key={i}
+                              className="h-14 w-full rounded-lg"
+                            />
+                          ))
+                        : newsCategories.map((item) => {
+                            const href = `/${locale}/news/${item.id}`;
+                            const active = pathname === href;
+
+                            return (
+                              <li key={item.id}>
+                                <Link
+                                  href={href}
+                                  onClick={closeMenu}
+                                  className={cn(
+                                    "block rounded-lg px-3 py-3 transition",
+                                    "hover:bg-white hover:shadow-sm",
+                                    active &&
+                                      "bg-white shadow-sm ring-1 ring-primary/20",
+                                  )}
+                                >
+                                  <div className="font-medium">{item.name}</div>
+                                  <p className="mt-1 text-sm text-slate-500">
+                                    {item.description}
+                                  </p>
+                                </Link>
+                              </li>
+                            );
+                          })}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
+              <NavItem
+                href={`/${locale}/contact`}
+                active={isActive(`/${locale}/contact`)}
+                onClick={closeMenu}
+              >
+                {tContact("title")}
+              </NavItem>
             </ul>
           </nav>
         </ScrollArea>
       </SheetContent>
     </Sheet>
+  );
+}
+
+/* ---------------- 一级导航组件 ---------------- */
+
+function NavItem({
+  href,
+  children,
+  active,
+  onClick,
+}: {
+  href: string;
+  children: React.ReactNode;
+  active?: boolean;
+  onClick?: () => void;
+}) {
+  return (
+    <li>
+      <Link
+        href={href}
+        onClick={onClick}
+        className={cn(
+          "relative flex items-center rounded-xl px-4 py-4 text-[17px] font-medium transition",
+          "hover:bg-slate-100",
+          active ? "bg-primary/5 font-semibold text-primary" : "text-slate-700",
+        )}
+      >
+        {active && (
+          <span className="absolute top-2 bottom-2 left-0 w-[3px] rounded-r bg-primary" />
+        )}
+        {children}
+      </Link>
+    </li>
   );
 }

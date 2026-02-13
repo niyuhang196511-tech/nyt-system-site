@@ -1,42 +1,52 @@
-import { getLanguage } from "@/lib/getLanguage";
-import { Language } from "@/types/language";
+import { Locale } from "@/types/locale";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
+import { contactsInfoConstants } from "@/constants/contact";
+import { getProductCategory } from "@/lib/product-category";
+import { getNewsCategory } from "@/lib/news-category";
 
-export default async function Footer({ language }: { language: Language }) {
-  const dict = await getLanguage(language);
+interface IProps {
+  locale: Locale;
+}
 
-  const contacts = dict.footer.contact.list;
+export default async function Footer({ locale }: IProps) {
+  const contactDict = await getTranslations("contact");
+  const productDict = await getTranslations("product");
+  const newsDict = await getTranslations("news");
+  const footerDict = await getTranslations("footer");
 
-  const productCategory = dict.product.category;
+  const productCategories = await getProductCategory(locale);
 
-  const newCategory = dict.new.category;
+  const newsCategories = await getNewsCategory(locale);
 
   return (
     <footer className="bg-primary">
       <div className="mx-auto px-4 py-10 text-white xl:container">
         <div className="mb-10 grid gap-12 md:grid-cols-2 xl:grid-cols-3">
           <div>
-            <h3 className="mb-6 text-2xl">{dict.footer.contact.title}</h3>
+            <h3 className="mb-6 text-2xl">{footerDict("contact.title")}</h3>
             <ul className="flex flex-col gap-3">
-              {contacts.map((contact, index) => (
+              {contactsInfoConstants.map((contact, index) => (
                 <li key={index} className="my-2 flex items-center gap-2">
                   <Image src={contact.icon} alt="" width={22} height={22} />
-                  <span className="text-sm">{contact.info}</span>
+                  <span className="text-sm">
+                    {contactDict(`${contact.key}`)}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <h3 className="mb-6 text-2xl">{dict.product.title}</h3>
+            <h3 className="mb-6 text-2xl">{productDict("title")}</h3>
             <ul className="flex flex-col gap-3">
-              {productCategory.map((category, index) => (
+              {productCategories.map((category, index) => (
                 <li
                   key={index}
                   className="my-2 flex items-center gap-2 text-sm"
                 >
-                  <Link href={`${language}/products/${category.id}`}>
+                  <Link href={`/${locale}/products/${category.id}`}>
                     {category.name}
                   </Link>
                 </li>
@@ -45,14 +55,14 @@ export default async function Footer({ language }: { language: Language }) {
           </div>
 
           <div>
-            <h3 className="mb-6 text-2xl">{dict.new.title}</h3>
+            <h3 className="mb-6 text-2xl">{newsDict("title")}</h3>
             <ul className="flex flex-col gap-3">
-              {newCategory.map((category) => (
+              {newsCategories.map((category) => (
                 <li
                   key={category.id}
                   className="my-2 flex items-center gap-2 text-sm"
                 >
-                  <Link href={`${language}/news#${category.id}`}>
+                  <Link href={`/${locale}/news#${category.id}`}>
                     {category.name}
                   </Link>
                 </li>
@@ -62,9 +72,9 @@ export default async function Footer({ language }: { language: Language }) {
         </div>
 
         <ul className="flex w-full flex-wrap justify-between gap-6">
-          <li>{dict.footer.icp_license}</li>
+          <li>{footerDict("icp_license")}</li>
           <li className="flex items-center">
-            {dict.footer.police_title}
+            {footerDict("police_title")}
             <Image
               className="mx-1"
               src="/images/police.png"
@@ -72,9 +82,9 @@ export default async function Footer({ language }: { language: Language }) {
               height={16}
               alt="police"
             />
-            {dict.footer.police_license}
+            {footerDict("police_license")}
           </li>
-          <li>{dict.footer.service_license}</li>
+          <li>{footerDict("service_license")}</li>
         </ul>
       </div>
     </footer>
