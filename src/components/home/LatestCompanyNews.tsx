@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";
-import { News } from "@/types/news";
+import type { CompanyNews } from "@/types/company-news";
 import { Locale } from "@/types/locale";
 import { YEAR_MONTH_DAY_HOUR_MINUTE_SECOND } from "@/constants/format";
 import { toMediaUrl } from "@/lib/utils";
@@ -11,11 +11,11 @@ import { toMediaUrl } from "@/lib/utils";
 interface IProps {
   title: string;
   description: string;
-  news: News[];
+  news: CompanyNews[];
   locale: Locale;
 }
 
-export default function LatestNews({
+export default function LatestCompanyNews({
   title,
   description,
   news,
@@ -45,7 +45,7 @@ export default function LatestNews({
           }`}
         >
           <Link
-            href={`/${locale}/news/${mainNews.categoryId}/${mainNews.id}`}
+            href={`/${locale}/company-news/${mainNews.id}`}
             className={`group relative overflow-hidden rounded-3xl bg-slate-100 shadow-sm ring-1 ring-slate-200/70 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl ${
               hasList ? "" : "w-full max-w-3xl"
             }`}
@@ -85,7 +85,7 @@ export default function LatestNews({
               {restNews.map((item) => (
                 <Link
                   key={item.id}
-                  href={`/${locale}/news/${item.categoryId}/${item.id}`}
+                  href={`/${locale}/company-news/${item.id}`}
                   className="group block rounded-2xl border border-slate-200 bg-white p-3 shadow-xs transition-all duration-300 hover:border-primary/40 hover:bg-slate-50 hover:shadow-md md:p-4"
                 >
                   <div className="flex gap-3 md:gap-4">

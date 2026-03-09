@@ -20,7 +20,7 @@ export interface News {
   related: string[];
   publish: boolean;
   top: boolean;
-  tags: Tag[];
+  tags: string[];
   prev: News | null;
   next: News | null;
 }

@@ -1,5 +1,4 @@
 import { ProductCategory } from "@/types/product";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Locale } from "@/types/locale";
 import Link from "next/link";
@@ -12,16 +11,22 @@ interface IProps {
 
 export default function HeroBanner({ category, categories, locale }: IProps) {
   return (
-    <div className="mx-auto grid grid-cols-1 gap-6 px-4 py-6 md:grid-cols-2 md:px-6 xl:container xl:gap-12 xl:py-14">
-      <div className="flex flex-col justify-center">
-        <h1 className="mb-6 text-4xl font-bold">{category.name}</h1>
-        <p className="mb-6">{category.description}</p>
-        <div className="flex flex-wrap gap-2">
+    <section className="relative overflow-hidden bg-slate-50 from-slate-50 to-white py-10 md:py-16">
+      <div className="relative mx-auto max-w-6xl px-6">
+        <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">
+          {category.name}
+        </h1>
+
+        <p className="mt-6 max-w-2xl leading-8 text-muted-foreground">
+          {category.description}
+        </p>
+
+        <div className="mt-8 flex flex-wrap gap-3">
           {categories.map((c) => (
             <Link href={`/${locale}/products/${c.id}`} key={c.id}>
               <Button
-                className="cursor-pointer rounded-3xl"
                 variant={c.id === category.id ? "default" : "outline"}
+                className="rounded-full px-6"
               >
                 {c.name}
               </Button>
@@ -29,18 +34,6 @@ export default function HeroBanner({ category, categories, locale }: IProps) {
           ))}
         </div>
       </div>
-
-      <Image
-        className="w-full rounded-2xl object-cover"
-        style={{
-          boxShadow:
-            "7px 7px 10px rgba(0,0,0,0.15), 7px 7px 10px rgba(0,0,0,0.15), 7px 7px 10px rgba(0,0,0,0.15)",
-        }}
-        src="/images/product-banner.webp"
-        alt="Product Banner"
-        width={600}
-        height={400}
-      />
-    </div>
+    </section>
   );
 }

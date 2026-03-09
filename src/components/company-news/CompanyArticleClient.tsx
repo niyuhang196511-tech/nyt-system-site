@@ -1,38 +1,30 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { News, NewsCategory } from "@/types/news";
 import { Locale } from "@/types/locale";
 import { useTranslations } from "next-intl";
 import { parseTocFromHtml, toMediaUrl } from "@/lib/utils";
 import dayjs from "dayjs";
 import { YEAR_MONTH_DAY_HOUR_MINUTE_SECOND } from "@/constants/format";
-import HtmlRenderer from "../HtmlRenderer";
+import HtmlRenderer from "@/components/HtmlRenderer";
 import type { TocItem } from "@/types/toc";
 import BackToTop from "@/components/BackToTop";
+import { CompanyNews } from "@/types/company-news";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface IProps {
-  news: News;
-  category: NewsCategory;
-  relatedList: News[];
+  news: CompanyNews;
   locale: Locale;
 }
 
-export default function ArticleClient({
-  news,
-  category,
-  relatedList,
-  locale,
-}: IProps) {
+export default function ArticleClient({ news, locale }: IProps) {
   const newsDict = useTranslations("news");
   // const contentRef = useRef<HTMLDivElement | null>(null);
   const tocRef = useRef<HTMLDivElement | null>(null);
@@ -86,14 +78,9 @@ export default function ArticleClient({
       >
         <div
           ref={tabsRef}
-          className="rounded-md bg-white/50 px-3 py-2 backdrop-blur-sm"
+          className="rounded-md bg-white/50 py-2 backdrop-blur-sm"
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <Link href={`/${locale}/news/${category.id}`}>
-              <Badge variant="outline">{category.name}</Badge>
-            </Link>
-            <div className="font-bold">·</div>
-
             {news.date && (
               <>
                 <div className="text-sm text-muted-foreground">
@@ -191,33 +178,6 @@ export default function ArticleClient({
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent>
-              <h4 className="mb-3 text-sm font-medium">{newsDict("toc")}</h4>
-              <ul className="space-y-2">
-                {relatedList && relatedList.length > 0 ? (
-                  relatedList.map((newsItem) => {
-                    // @ts-ignore
-                    return (
-                      <li key={newsItem.id} className="text-sm">
-                        <Link
-                          href={`/news/0/${newsItem.id}`}
-                          className="hover:underline"
-                        >
-                          {newsItem.title}
-                        </Link>
-                      </li>
-                    );
-                  })
-                ) : (
-                  <li className="text-sm text-muted-foreground">
-                    {newsDict("toc_empty")}
-                  </li>
-                )}
-              </ul>
             </CardContent>
           </Card>
         </div>

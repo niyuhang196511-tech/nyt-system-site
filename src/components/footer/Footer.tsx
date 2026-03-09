@@ -11,10 +11,10 @@ interface IProps {
 }
 
 export default async function Footer({ locale }: IProps) {
-  const contactDict = await getTranslations("contact");
-  const productDict = await getTranslations("product");
-  const newsDict = await getTranslations("news");
-  const footerDict = await getTranslations("footer");
+  const contactDict = await getTranslations({ locale, namespace: "contact" });
+  const productDict = await getTranslations({ locale, namespace: "product" });
+  const newsDict = await getTranslations({ locale, namespace: "news" });
+  const footerDict = await getTranslations({ locale, namespace: "footer" });
 
   const productCategories = await getProductCategory(locale);
 
@@ -62,7 +62,7 @@ export default async function Footer({ locale }: IProps) {
                   key={category.id}
                   className="my-2 flex items-center gap-2 text-sm"
                 >
-                  <Link href={`/${locale}/news#${category.id}`}>
+                  <Link href={`/${locale}/news/${category.id}`}>
                     {category.name}
                   </Link>
                 </li>

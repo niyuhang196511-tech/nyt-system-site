@@ -9,34 +9,32 @@ import { PAGE_SIZE } from "@/constants/new";
 import { Skeleton } from "../ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
-import { News, NewsCategory } from "@/types/news";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTranslations } from "next-intl";
-import { getNewsList } from "@/lib/news";
 import { toMediaUrl } from "@/lib/utils";
 import dayjs from "dayjs";
+import { getCompanyNewsList } from "@/lib/company-news";
+import { CompanyNews } from "@/types/company-news";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface IProps {
   locale: Locale;
-  categories: NewsCategory[];
-  categoryId: number;
 }
 
 const cache = new Map<
   string,
-  { total: number; itemsByPage: Map<number, News[]> }
+  { total: number; itemsByPage: Map<number, CompanyNews[]> }
 >();
 
-export default function NewsList({ locale, categories, categoryId }: IProps) {
-  const newsDict = useTranslations("news");
+export default function NewsList({ locale }: IProps) {
+  const newsDict = useTranslations("company-news");
 
   const [searchRaw, setSearchRaw] = useState("");
   const [search, setSearch] = useState("");
 
-  const [items, setItems] = useState<News[]>([]);
+  const [items, setItems] = useState<CompanyNews[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -47,7 +45,7 @@ export default function NewsList({ locale, categories, categoryId }: IProps) {
   const inFlightRef = useRef(false);
   const gsapContextRef = useRef<gsap.Context | null>(null);
 
-  const mkKey = (l: Locale, s: string, c: number) => `${l}||${s}||${c}`;
+  const mkKey = (l: Locale, s: string) => `${l}||${s}`;
 
   // ---------------------------
   // 搜索按钮触发
@@ -73,7 +71,7 @@ export default function NewsList({ locale, categories, categoryId }: IProps) {
 
     fetchPage(1, { reset: true }).finally(() => setInitialLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, categoryId, locale]);
+  }, [search, locale]);
 
   useEffect(() => {
     if (page === 1) return;
@@ -112,7 +110,7 @@ export default function NewsList({ locale, categories, categoryId }: IProps) {
     pageToLoad: number,
     options: { reset?: boolean } = {},
   ) {
-    const key = mkKey(locale, search, categoryId);
+    const key = mkKey(locale, search);
     const cached = cache.get(key);
 
     if (cached && cached.itemsByPage.has(pageToLoad)) {
@@ -132,12 +130,11 @@ export default function NewsList({ locale, categories, categoryId }: IProps) {
     setLoading(true);
 
     try {
-      const res = await getNewsList(
+      const res = await getCompanyNewsList(
+        locale,
         pageToLoad,
         PAGE_SIZE,
         search,
-        categoryId,
-        locale,
       );
 
       const total = res.total;
@@ -223,19 +220,6 @@ export default function NewsList({ locale, categories, categoryId }: IProps) {
             </Button>
           </div>
         </div>
-
-        <div className="flex flex-wrap gap-3">
-          {categories.map((c) => (
-            <Link key={c.id} href={`/${locale}/news/${c.id}`}>
-              <Button
-                variant={c.id === categoryId ? "default" : "outline"}
-                className="rounded-full"
-              >
-                {c.name}
-              </Button>
-            </Link>
-          ))}
-        </div>
       </div>
 
       {/* 新闻列表 */}
@@ -281,7 +265,7 @@ export default function NewsList({ locale, categories, categoryId }: IProps) {
               </p>
 
               <Link
-                href={`/${locale}/news/${item.categoryId}/${item.id}`}
+                href={`/${locale}/company-news/${item.id}`}
                 className="inline-flex items-center text-sm font-medium text-primary"
               >
                 {newsDict("detail")} →

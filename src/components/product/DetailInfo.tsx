@@ -18,7 +18,7 @@ export default function DetailInfo({
   carouselImages,
 }: IProps) {
   return (
-    <section className="mx-auto grid grid-cols-1 gap-14 px-4 md:grid-cols-2 md:px-6 xl:container">
+    <section className="mx-auto grid grid-cols-1 gap-10 px-4 md:grid-cols-2 md:px-6 xl:container">
       {/* left info */}
       <div className="flex flex-col justify-center">
         <div className="mb-6">
@@ -37,17 +37,17 @@ export default function DetailInfo({
           </div>
         </div>
 
-        <h1 className="mb-6 text-3xl font-bold tracking-wide xl:text-4xl">
+        <h1 className="mb-6 text-3xl font-bold tracking-wide break-all xl:text-4xl">
           {product.name}
         </h1>
 
-        <p className="indent-8 leading-8 text-gray-700">
+        <p className="indent-8 leading-8 break-all text-gray-700">
           {product.description}
         </p>
       </div>
 
       {/* right images */}
-      <div>
+      <div className="flex items-center">
         <Carousel images={carouselImages} />
       </div>
     </section>

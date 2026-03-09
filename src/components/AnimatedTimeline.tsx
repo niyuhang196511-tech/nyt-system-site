@@ -24,45 +24,38 @@ const TimelineItem = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "relative mb-14 flex flex-col md:flex-row md:items-center",
-        // 保持 item 本身不引起横向 overflow
-        "overflow-x-hidden",
+        "relative mb-10 pl-6 md:mb-14 md:grid md:grid-cols-[1fr_auto_1fr] md:items-stretch md:gap-8 md:pl-0",
       )}
     >
-      {/* 日期（PC 两侧） */}
       <div
         className={cn(
-          "hidden font-semibold text-gray-600 md:block md:w-1/2 dark:text-gray-400",
-          isLeft ? "pr-6 text-right" : "pl-6 text-left",
+          "md:min-h-px",
+          isLeft ? "md:col-start-1 md:pr-4" : "md:col-start-3 md:pl-4",
         )}
       >
-        {date}
-      </div>
-
-      {/* 中心短线（视觉引导） - PC 可见 */}
-      <div className="relative hidden w-0 flex-col items-center md:flex">
-        <div className="h-20 w-0.5 bg-gray-200 dark:bg-gray-800" />
-      </div>
-
-      {/* 卡片 */}
-      <div
-        className={cn("md:w-1/2 md:px-8", isLeft ? "md:order-1" : "md:order-3")}
-      >
         <Card
-          className={cn("border transition-shadow", "border-primary shadow-lg")}
+          className={cn(
+            "border transition-all",
+            "border-accent shadow-lg",
+            "hover:-translate-y-1 hover:shadow-2xl md:max-w-lg",
+            isLeft ? "md:ml-auto" : "md:mr-auto",
+            "bg-linear-to-br from-blue-50 via-white to-blue-100",
+          )}
         >
           <CardHeader className="p-4 md:p-5">
+            <p className="mb-1 text-xs font-semibold tracking-wide text-gray-600 uppercase dark:text-gray-400">
+              {date}
+            </p>
             <CardTitle className="text-base md:text-lg">{title}</CardTitle>
           </CardHeader>
           <CardContent className="p-4 pt-0 md:p-5 md:pt-0">
             <p className="text-sm text-muted-foreground">{description}</p>
           </CardContent>
         </Card>
+      </div>
 
-        {/* 移动端日期（卡片下方） */}
-        <div className="mt-2 text-sm font-semibold text-gray-600 md:hidden">
-          {date}
-        </div>
+      <div className="absolute top-6 left-0 md:static md:col-start-2 md:flex md:items-start md:justify-center">
+        <span className="block h-3.5 w-3.5 rounded-full border-2 border-white bg-blue-500 shadow-[0_0_0_3px_rgba(59,130,246,0.2)] dark:border-slate-950" />
       </div>
     </div>
   );

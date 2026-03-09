@@ -3,33 +3,59 @@ import { notFound } from "next/navigation";
 import ArticleClient from "@/components/news/ArticleClient";
 import { Locale } from "@/types/locale";
 import { getTranslations } from "next-intl/server";
-import { getNews, getRelatedNewsById } from "@/lib/news";
-import { getNewsCategoryById } from "@/lib/news-category";
-import dayjs from "dayjs";
-import { YEAR_MONTH_DAY_HOUR_MINUTE_SECOND } from "@/constants/format";
+import { getNews, getRelatedNewsById, getNewsList } from "@/lib/news";
+import { getNewsCategory, getNewsCategoryById } from "@/lib/news-category";
 import { Metadata } from "next";
+import { routing } from "@/i18n/routing";
+import { setRequestLocale } from "next-intl/server";
 
 interface IParams {
   locale: Locale;
-  id: number;
+  categoryId: string;
+  newsId: string;
 }
+
+export const revalidate = 60;
+
+export const generateStaticParams = async () => {
+  const params: { locale: Locale; categoryId: string; newsId: string }[] = [];
+  const locales = routing.locales as readonly Locale[];
+
+  for (const locale of locales) {
+    const categories = await getNewsCategory(locale);
+    for (const c of categories) {
+      // 拉取该分类下的新闻列表，用较大 pageSize 以覆盖现有条目
+      const list = await getNewsList(1, 500, "", c.id, locale);
+      for (const item of list.list) {
+        params.push({
+          locale,
+          categoryId: String(c.id),
+          newsId: String(item.id),
+        });
+      }
+    }
+  }
+
+  return params;
+};
 
 export const generateMetadata = async ({
   params,
 }: {
   params: Promise<IParams>;
 }): Promise<Metadata> => {
-  const { locale, id } = await params;
+  const { locale, newsId } = await params;
 
-  const siteDict = await getTranslations("site");
+  const siteDict = await getTranslations({ locale, namespace: "site" });
 
-  const news = await getNews(id);
+  const news = await getNews(Number(newsId));
 
   const categoryId = news.categoryId;
 
   const category = await getNewsCategoryById(categoryId, locale);
 
-  const relatedList = (await getRelatedNewsById(id, locale, 1, 10)).list;
+  const relatedList = (await getRelatedNewsById(Number(newsId), locale, 1, 10))
+    .list;
 
   const title = ` ${news.title} | ${category.name}`;
   const description = news.subtitle;
@@ -39,23 +65,24 @@ export const generateMetadata = async ({
     description,
     keywords: [
       news.title,
+      news.subtitle,
       category.name,
-      ...news.tags.map((tag) => tag.name),
+      ...news.tags,
       ...relatedList.map((related) => related.title),
     ],
     openGraph: {
       type: "website",
       title,
       description,
-      url: `https://www.jundaoxin.com/${locale}/news/${id}`,
+      url: `https://www.jundaoxin.com/${locale}/news/${categoryId}/${newsId}`,
       siteName: siteDict("title"),
       locale,
     },
     alternates: {
-      canonical: `https://www.jundaoxin.com/${locale}/news/${id}`,
+      canonical: `https://www.jundaoxin.com/${locale}/news/${categoryId}/${newsId}`,
       languages: {
-        "zh-CN": `https://www.jundaoxin.com/zh-CN/news/${id}`,
-        "en-US": `https://www.jundaoxin.com/en-US/news/${id}`,
+        "zh-CN": `https://www.jundaoxin.com/zh-CN/news/${categoryId}/${newsId}`,
+        "en-US": `https://www.jundaoxin.com/en-US/news/${categoryId}/${newsId}`,
       },
     },
     robots: {
@@ -82,20 +109,22 @@ export default async function ArticlePage({
 }: {
   params: Promise<IParams>;
 }) {
-  const { locale, id } = await params;
+  const { locale, newsId } = await params;
+  setRequestLocale(locale);
 
-  const homeDict = await getTranslations("home");
-  const newsDict = await getTranslations("news");
+  const homeDict = await getTranslations({ locale, namespace: "home" });
+  const newsDict = await getTranslations({ locale, namespace: "news" });
 
-  const news = await getNews(id);
+  const news = await getNews(Number(newsId));
 
-  if (!Object.keys(news).length) return notFound();
+  if (!news && !Object.keys(news).length) return notFound();
 
   const categoryId = news.categoryId;
 
   const category = await getNewsCategoryById(categoryId, locale);
 
-  const relatedList = (await getRelatedNewsById(id, locale, 1, 10)).list;
+  const relatedList = (await getRelatedNewsById(Number(newsId), locale, 1, 10))
+    .list;
 
   return (
     <main className="min-h-screen bg-gray-50 p-6 md:p-12">
@@ -105,27 +134,13 @@ export default async function ArticlePage({
           <nav className="mb-3 text-sm text-muted-foreground">
             <Link href={`/${locale}`}>{homeDict("title")}</Link>
             <span className="mx-2">/</span>
-            <Link href={`/${locale}/news`}>{newsDict("title")}</Link>
-            <span className="mx-2">/</span>
-            <span className="text-foreground">{news.title}</span>
+            <Link href={`/${locale}/news/0`}>{newsDict("title")}</Link>
           </nav>
 
           <h1 className="text-3xl leading-tight font-bold">{news.title}</h1>
           {news.subtitle && (
             <p className="mt-2 text-muted-foreground">{news.subtitle}</p>
           )}
-
-          <div className="mt-3 flex items-center gap-4 text-sm text-muted-foreground">
-            <span>
-              {dayjs(news.date).format(YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)}
-            </span>
-            <span>·</span>
-            <span>{news.author}</span>
-            <span>·</span>
-            <span>
-              {news.views} {newsDict("views")}
-            </span>
-          </div>
         </header>
 
         <ArticleClient

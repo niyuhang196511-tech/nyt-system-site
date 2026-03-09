@@ -1,19 +1,48 @@
 import { Locale } from "@/types/locale";
 import Image from "next/image";
-import VideoPlayer from "@/components/VideoPlayer";
 import HeroModel from "@/components/product/HeroModel";
 import DetailInfo from "@/components/product/DetailInfo";
-import { getProductById } from "@/lib/product";
+import VideoPlayer from "@/components/VideoPlayer";
+import { getProductById, getProductsByCategoryId } from "@/lib/product";
 import { getProductCategoryById } from "@/lib/product-category";
 import { toMediaUrl } from "@/lib/utils";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
+import { getProductCategory } from "@/lib/product-category";
 
 interface IParams {
   locale: Locale;
   categoryId: string;
   productId: string;
 }
+
+export const revalidate = 60;
+export const dynamicParams = false;
+export const dynamic = "force-static";
+
+export const generateStaticParams = async () => {
+  const params: { locale: Locale; categoryId: string; productId: string }[] =
+    [];
+  const locales = routing.locales as readonly Locale[];
+
+  for (const locale of locales) {
+    const categories = await getProductCategory(locale);
+    for (const c of categories) {
+      const products = await getProductsByCategoryId(String(c.id), locale);
+      for (const p of products) {
+        params.push({
+          locale,
+          categoryId: String(c.id),
+          productId: String(p.id),
+        });
+      }
+    }
+  }
+
+  return params;
+};
 
 export const generateMetadata = async ({
   params,
@@ -37,7 +66,7 @@ export const generateMetadata = async ({
       product.name,
       category.name,
       ...product.characteristics.map((char) => char.name),
-      ...product.videos.map((vid) => vid.title),
+      ...(product.videos?.map((vid) => vid.title) ?? []),
     ],
     openGraph: {
       type: "website",
@@ -83,9 +112,12 @@ export default async function ProductPage({
   const category = await getProductCategoryById(categoryId, locale);
   const product = await getProductById(productId, locale);
 
+  if (!category || !product) return notFound();
   return (
     <section className="space-y-5 xl:space-y-10">
-      <HeroModel modelSrc={product.heroVideo}></HeroModel>
+      {product.heroVideo && (
+        <HeroModel modelSrc={product.heroVideo}></HeroModel>
+      )}
 
       <DetailInfo
         product={product}
@@ -95,32 +127,36 @@ export default async function ProductPage({
       ></DetailInfo>
 
       {/* ========== Color Page ========== */}
-      <section className="mx-auto px-4 xl:container">
-        <Image
-          className="h-auto w-full rounded-lg object-cover shadow-md"
-          src={toMediaUrl(product.colorPage)}
-          alt="color page"
-          width={1200}
-          height={800}
-        />
-      </section>
+      {product.colorPage && (
+        <section className="mx-auto xl:container">
+          <Image
+            className="h-auto w-full rounded-lg object-cover shadow-md"
+            src={toMediaUrl(product.colorPage)}
+            alt="color page"
+            width={1200}
+            height={800}
+          />
+        </section>
+      )}
 
       {/* ========== Video Grid ========== */}
-      <section className="mx-auto grid gap-10 px-4 py-10 md:grid-cols-2 xl:container xl:grid-cols-3">
-        {product.videos.map((video) => (
-          <VideoPlayer
-            videoName={video.title}
-            key={video.id}
-            sources={[
-              {
-                url: video.address,
-                label: "标准清晰度",
-                value: "HD",
-              },
-            ]}
-          />
-        ))}
-      </section>
+      {product.videos && (
+        <section className="mx-auto grid gap-10 px-4 py-10 md:grid-cols-2 xl:container xl:grid-cols-3">
+          {product.videos.map((video) => (
+            <VideoPlayer
+              videoName={video.title}
+              key={video.id}
+              sources={[
+                {
+                  url: video.address,
+                  label: "标准清晰度",
+                  value: "HD",
+                },
+              ]}
+            />
+          ))}
+        </section>
+      )}
     </section>
   );
 }

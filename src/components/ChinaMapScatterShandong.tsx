@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import * as echarts from "echarts";
+import * as echarts from "echarts/core";
+import { EffectScatterChart, LinesChart } from "echarts/charts";
+import { GeoComponent } from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
+
+echarts.use([EffectScatterChart, LinesChart, GeoComponent, CanvasRenderer]);
 
 export type City = {
   name: string;
@@ -72,7 +77,7 @@ export default function ChinaFlylineRippleMap({
               },
             },
             label: {
-              show: true,
+              show: false,
               textBorderColor: "#fff",
               textBorderWidth: 2,
             },

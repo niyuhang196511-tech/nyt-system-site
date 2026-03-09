@@ -3,6 +3,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  output: "standalone",
   async headers() {
     return [
       {
@@ -31,15 +32,9 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    // dangerouslyAllowSVG: true,
-    // remotePatterns: [
-    //   {
-    //     protocol: "http",
-    //     hostname: "192.168.0.33",
-    //     port: "9000",
-    //     pathname: "/**",
-    //   },
-    // ],
+    formats: ["image/avif", "image/webp"],
+    deviceSizes: [640, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 };
 

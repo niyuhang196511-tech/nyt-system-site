@@ -4,6 +4,7 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import { Locale } from "@/types/locale";
 import { NextIntlClientProvider } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 
 // export const dynamic = 'force-static'
 
@@ -32,17 +33,18 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={sourceHan.variable}>
+    <html lang={locale} className={sourceHan.className}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body>
+      <body className="flex min-h-screen flex-col">
         <NextIntlClientProvider>
           {/* <ThemeProvider> */}
           <Header locale={locale as Locale}></Header>
-          <main>{children}</main>
+          <main className="flex-1">{children}</main>
           <Footer locale={locale as Locale}></Footer>
           {/* </ThemeProvider> */}
         </NextIntlClientProvider>

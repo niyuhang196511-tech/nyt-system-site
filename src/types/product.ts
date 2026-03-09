@@ -14,11 +14,11 @@ export interface Product {
   name: string;
   description: string;
   cover: string;
-  heroVideo: string;
+  heroVideo?: string;
   images: string[];
-  colorPage: string;
+  colorPage?: string;
   characteristics: ProductCharacteristic[];
-  videos: ProductVideo[];
+  videos?: ProductVideo[];
 }
 
 export interface ProductCharacteristic {

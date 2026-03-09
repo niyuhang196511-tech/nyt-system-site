@@ -15,6 +15,8 @@ export default function HeroModel({ modelSrc }: IProps) {
           autoPlay
           loop
           muted
+          preload="metadata"
+          playsInline
         ></video>
       </div>
     </section>

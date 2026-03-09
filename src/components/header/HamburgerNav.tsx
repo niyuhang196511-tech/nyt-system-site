@@ -7,7 +7,12 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import {
   Accordion,
   AccordionItem,
@@ -31,12 +36,13 @@ interface IProps {
 export default function MobileMenu({ locale }: IProps) {
   const pathname = usePathname();
 
-  const tNav = useTranslations("nav");
-  const tHome = useTranslations("home");
-  const tProduct = useTranslations("product");
-  const tNews = useTranslations("news");
-  const tAbout = useTranslations("about");
-  const tContact = useTranslations("contact");
+  const navDict = useTranslations("nav");
+  const homeDict = useTranslations("home");
+  const productDict = useTranslations("product");
+  const companyNewsDict = useTranslations("company-news");
+  const newsDict = useTranslations("news");
+  const aboutDict = useTranslations("about");
+  const contactDict = useTranslations("contact");
 
   const [open, setOpen] = useState(false);
   const [productLoading, setProductLoading] = useState(true);
@@ -134,13 +140,16 @@ export default function MobileMenu({ locale }: IProps) {
       </SheetTrigger>
 
       <SheetContent side="right" className="w-full max-w-sm p-0">
+        <SheetTitle className="sr-only">
+          {navDict("hamburger-nav-title")}
+        </SheetTitle>
         {/* 标题区 */}
         <div className="border-b px-5 py-6">
           <div className="text-lg font-bold tracking-wide">
-            {tNav("hamburger-nav-title")}
+            {navDict("hamburger-nav-title")}
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
-            {tNav("hamburger-nav-description")}
+            {navDict("hamburger-nav-description")}
           </p>
         </div>
 
@@ -152,7 +161,7 @@ export default function MobileMenu({ locale }: IProps) {
                 active={isActive(`/${locale}`)}
                 onClick={closeMenu}
               >
-                {tHome("title")}
+                {homeDict("title")}
               </NavItem>
 
               {/* 产品 */}
@@ -163,7 +172,7 @@ export default function MobileMenu({ locale }: IProps) {
               >
                 <AccordionItem value="products" className="border-none">
                   <AccordionTrigger className="rounded-xl px-4 py-4 text-[17px] font-semibold hover:bg-slate-100">
-                    {tProduct("title")}
+                    {productDict("title")}
                   </AccordionTrigger>
 
                   <AccordionContent>
@@ -209,7 +218,15 @@ export default function MobileMenu({ locale }: IProps) {
                 active={isActive(`/${locale}/about`)}
                 onClick={closeMenu}
               >
-                {tAbout("title")}
+                {aboutDict("title")}
+              </NavItem>
+
+              <NavItem
+                href={`/${locale}/company-news`}
+                active={isActive(`/${locale}/company-news`)}
+                onClick={closeMenu}
+              >
+                {companyNewsDict("title")}
               </NavItem>
 
               {/* 新闻 */}
@@ -220,7 +237,7 @@ export default function MobileMenu({ locale }: IProps) {
               >
                 <AccordionItem value="news" className="border-none">
                   <AccordionTrigger className="rounded-xl px-4 py-4 text-[17px] font-semibold hover:bg-slate-100">
-                    {tNews("title")}
+                    {newsDict("title")}
                   </AccordionTrigger>
 
                   <AccordionContent>
@@ -281,7 +298,7 @@ export default function MobileMenu({ locale }: IProps) {
                 active={isActive(`/${locale}/contact`)}
                 onClick={closeMenu}
               >
-                {tContact("title")}
+                {contactDict("title")}
               </NavItem>
             </ul>
           </nav>

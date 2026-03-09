@@ -1,20 +1,19 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { Slider } from "@/components/ui/slider"; // shadcn Slider
+import { useEffect, useRef, useState } from "react";
+import { Slider } from "@/components/ui/slider";
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@/components/ui/popover"; // shadcn Popover
-import { Switch } from "@/components/ui/switch"; // shadcn Switch
+} from "@/components/ui/popover";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectTrigger,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select"; // shadcn Select
-import { Button } from "@/components/ui/button"; // optional
+} from "@/components/ui/select";
 import {
   Play,
   Pause,
@@ -25,11 +24,10 @@ import {
   Maximize2,
   Minimize2,
   ImageMinus,
-  RefreshCw,
-  Cpu,
 } from "lucide-react";
 import gsap from "gsap";
 import Hls from "hls.js";
+import { useTranslations } from "next-intl";
 
 type Source = { label: string; url: string; value: string };
 
@@ -44,10 +42,11 @@ export default function ProVideoPlayer({
   sources: Source[];
   initialQuality?: string;
 }) {
+  const videoDict = useTranslations("video");
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [playing, setPlaying] = useState(false);
-  const [progress, setProgress] = useState(0); // 0 - 100
+  const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
   const [muted, setMuted] = useState(false);
@@ -62,6 +61,9 @@ export default function ProVideoPlayer({
   const [showControls, setShowControls] = useState(true);
   const [isSeeking] = useState(false);
   const [hlsInstance, setHlsInstance] = useState<Hls | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
 
   // ---------- Load source (Option A: multiple files)
   useEffect(() => {
@@ -282,13 +284,74 @@ export default function ProVideoPlayer({
   // ---------- full screen
   const toggleFullscreen = async () => {
     const el = wrapRef.current;
+    const v = videoRef.current;
     if (!el) return;
     if (document.fullscreenElement) {
       await document.exitFullscreen();
     } else {
-      await el.requestFullscreen().catch(() => {});
+      const request =
+        el.requestFullscreen ||
+        (v &&
+          ((v as HTMLVideoElement & { webkitEnterFullscreen?: () => void })
+            .webkitEnterFullscreen as (() => void) | undefined));
+      if (!request) return;
+      if (request === el.requestFullscreen) {
+        await el.requestFullscreen().catch(() => {});
+      } else if (v) {
+        request.call(v);
+      }
     }
   };
+
+  // ---------- +/- seek
+  const seekBy = (seconds: number) => {
+    const v = videoRef.current;
+    if (!v || !v.duration || Number.isNaN(v.duration)) return;
+    const next = Math.max(0, Math.min(v.duration, v.currentTime + seconds));
+    v.currentTime = next;
+    setProgress((next / v.duration) * 100);
+  };
+
+  // ---------- fullscreen and viewport states
+  useEffect(() => {
+    const onFsChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+      setShowControls(true);
+    };
+    const mq = window.matchMedia("(max-width: 767px)");
+    const onViewport = () => setIsMobile(mq.matches);
+    onViewport();
+    document.addEventListener("fullscreenchange", onFsChange);
+    mq.addEventListener("change", onViewport);
+    return () => {
+      document.removeEventListener("fullscreenchange", onFsChange);
+      mq.removeEventListener("change", onViewport);
+    };
+  }, []);
+
+  // ---------- keyboard shortcuts
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (!isFullscreen && !isInteracting) return;
+      const target = e.target as HTMLElement | null;
+      const tag = target?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+
+      if (e.key === "ArrowLeft") {
+        seekBy(-10);
+        e.preventDefault();
+      } else if (e.key === "ArrowRight") {
+        seekBy(10);
+        e.preventDefault();
+      } else if (e.key.toLowerCase() === "f") {
+        void toggleFullscreen();
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isFullscreen, isInteracting]);
 
   // ---------- mobile swipe: left/right to seek
   useEffect(() => {
@@ -296,33 +359,44 @@ export default function ProVideoPlayer({
     if (!el) return;
     let startX = 0;
     let startY = 0;
+    let startTime = 0;
+    let startVolume = volume;
+    let mode: "horizontal" | "vertical" | null = null;
+
     const onTouchStart = (e: TouchEvent) => {
       startX = e.touches[0].clientX;
       startY = e.touches[0].clientY;
+      startTime = videoRef.current?.currentTime ?? 0;
+      startVolume = volume;
+      mode = null;
     };
     const onTouchMove = (e: TouchEvent) => {
       if (!videoRef.current) return;
       const dx = e.touches[0].clientX - startX;
       const dy = e.touches[0].clientY - startY;
-      // horizontal dominant -> seek
-      if (Math.abs(dx) > Math.abs(dy)) {
-        // change currentTime proportional to dx
+
+      if (!mode) {
+        mode = Math.abs(dx) > Math.abs(dy) ? "horizontal" : "vertical";
+      }
+
+      if (mode === "horizontal") {
         const v = videoRef.current;
-        if (!v.duration) return;
-        v.currentTime = Math.max(
-          0,
-          Math.min(v.duration, v.currentTime + dx * 0.05),
-        ); // tweak sensitivity
+        if (!v.duration || Number.isNaN(v.duration)) return;
+        const width = Math.max(el.clientWidth, 1);
+        const deltaSec = (dx / width) * Math.max(v.duration * 0.4, 30);
+        const next = Math.max(0, Math.min(v.duration, startTime + deltaSec));
+        v.currentTime = next;
+        setProgress((next / v.duration) * 100);
+        e.preventDefault();
       } else {
-        // vertical -> volume adjust
-        // const v = videoRef.current;
-        let newVol = volume - dy / 300;
+        let newVol = startVolume - dy / 300;
         newVol = Math.max(0, Math.min(1, newVol));
         setVolume(newVol);
+        setMuted(newVol === 0);
       }
     };
-    el.addEventListener("touchstart", onTouchStart);
-    el.addEventListener("touchmove", onTouchMove);
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
     return () => {
       el.removeEventListener("touchstart", onTouchStart);
       el.removeEventListener("touchmove", onTouchMove);
@@ -354,8 +428,15 @@ export default function ProVideoPlayer({
     <div className="w-full">
       <div
         ref={wrapRef}
-        className="relative w-full overflow-hidden rounded-lg bg-black"
-        style={{ aspectRatio: "16/9" }}
+        className={`relative w-full overflow-hidden bg-black ${
+          isFullscreen ? "h-screen rounded-none" : "rounded-lg"
+        }`}
+        style={isFullscreen ? undefined : { aspectRatio: "16/9" }}
+        tabIndex={0}
+        onMouseEnter={() => setIsInteracting(true)}
+        onMouseLeave={() => setIsInteracting(false)}
+        onFocus={() => setIsInteracting(true)}
+        onBlur={() => setIsInteracting(false)}
       >
         {/* video element */}
         <video
@@ -370,7 +451,7 @@ export default function ProVideoPlayer({
           <button
             onClick={togglePlay}
             className="absolute top-1/2 left-1/2 z-30 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/50"
-            aria-label="play"
+            aria-label={videoDict("play")}
           >
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white">
               <Play size={16} />
@@ -456,7 +537,7 @@ export default function ProVideoPlayer({
                 {/* screenshot */}
                 <button
                   onClick={handleScreenshot}
-                  className="rounded-md p-2 text-white/90 hover:bg-white/5"
+                  className="hidden rounded-md p-2 text-white/90 hover:bg-white/5 sm:block"
                 >
                   <Image size={16} />
                 </button>
@@ -464,7 +545,7 @@ export default function ProVideoPlayer({
                 {/* pip */}
                 <button
                   onClick={togglePiP}
-                  className="rounded-md p-2 text-white/90 hover:bg-white/5"
+                  className="hidden rounded-md p-2 text-white/90 hover:bg-white/5 sm:block"
                 >
                   <ImageMinus size={16} />
                 </button>
@@ -472,15 +553,24 @@ export default function ProVideoPlayer({
                 {/* fullscreen */}
                 <button
                   onClick={toggleFullscreen}
-                  className="rounded-md p-2 text-white/90 hover:bg-white/5"
+                  className="hidden rounded-md p-2 text-white/90 hover:bg-white/5 sm:block"
+                  aria-label={
+                    isFullscreen
+                      ? videoDict("exit_fullscreen")
+                      : videoDict("fullscreen")
+                  }
                 >
-                  <Maximize2 size={16} />
+                  {isFullscreen ? (
+                    <Minimize2 size={16} />
+                  ) : (
+                    <Maximize2 size={16} />
+                  )}
                 </button>
 
                 {/* settings popover */}
                 <Popover>
                   <PopoverTrigger asChild>
-                    <button className="rounded-md p-2 text-white/90 hover:bg-white/5">
+                    <button className="hidden rounded-md p-2 text-white/90 hover:bg-white/5 sm:block">
                       <Settings size={16} />
                     </button>
                   </PopoverTrigger>
@@ -492,7 +582,7 @@ export default function ProVideoPlayer({
                   >
                     {/* autoplay */}
                     <div className="mb-3 flex items-center justify-between">
-                      <div className="text-sm">自动播放</div>
+                      <div className="text-sm">{videoDict("autoplay")}</div>
                       <Switch
                         checked={autoplay}
                         onCheckedChange={(v: boolean) => setAutoplay(v)}
@@ -501,7 +591,7 @@ export default function ProVideoPlayer({
 
                     {/* loop */}
                     <div className="mb-3 flex items-center justify-between">
-                      <div className="text-sm">循环播放</div>
+                      <div className="text-sm">{videoDict("loop")}</div>
                       <Switch
                         checked={loop}
                         onCheckedChange={(v: boolean) => setLoop(v)}
@@ -510,7 +600,7 @@ export default function ProVideoPlayer({
 
                     {/* speed */}
                     <div className="mb-3">
-                      <div className="mb-2 text-sm">播放速度</div>
+                      <div className="mb-2 text-sm">{videoDict("speed")}</div>
                       <Select onValueChange={(val) => setSpeed(Number(val))}>
                         <SelectTrigger className="w-full bg-white/5 text-white/90">
                           {speed}x
@@ -527,7 +617,7 @@ export default function ProVideoPlayer({
 
                     {/* quality */}
                     <div>
-                      <div className="mb-2 text-sm">清晰度</div>
+                      <div className="mb-2 text-sm">{videoDict("quality")}</div>
                       <Select onValueChange={(val) => changeQuality(val)}>
                         <SelectTrigger className="w-full bg-white/5 text-white/90">
                           {sources.find((s) => s.value === quality)?.label ??
@@ -546,6 +636,25 @@ export default function ProVideoPlayer({
                 </Popover>
               </div>
             </div>
+            {isMobile && (
+              <div className="flex items-center justify-end gap-2 sm:hidden">
+                <button
+                  onClick={toggleFullscreen}
+                  className="rounded-md p-2 text-white/90 hover:bg-white/5"
+                  aria-label={
+                    isFullscreen
+                      ? videoDict("exit_fullscreen")
+                      : videoDict("fullscreen")
+                  }
+                >
+                  {isFullscreen ? (
+                    <Minimize2 size={16} />
+                  ) : (
+                    <Maximize2 size={16} />
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

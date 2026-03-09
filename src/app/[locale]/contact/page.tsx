@@ -9,14 +9,23 @@ interface IParams {
   locale: Locale;
 }
 
+export const revalidate = 60;
+
+export const generateStaticParams = async (): Promise<{ locale: Locale }[]> => {
+  return [{ locale: "zh-CN" as Locale }, { locale: "en-US" as Locale }];
+};
+
+export const dynamicParams = false;
+export const dynamic = "force-static";
+
 export const generateMetadata = async ({
   params,
 }: {
   params: Promise<IParams>;
 }): Promise<Metadata> => {
   const { locale } = await params;
-  const siteDict = await getTranslations("site");
-  const contactDict = await getTranslations("contact");
+  const siteDict = await getTranslations({ locale, namespace: "site" });
+  const contactDict = await getTranslations({ locale, namespace: "contact" });
 
   const title = `${contactDict("title")}`;
   const description = `${contactDict("weixin")} / ${contactDict("special_plane")} / ${contactDict("phone")} / ${contactDict("address")}`;
@@ -59,8 +68,13 @@ export const generateMetadata = async ({
   };
 };
 
-export default async function ContactPage() {
-  const contactDict = await getTranslations("contact");
+export default async function ContactPage({
+  params,
+}: {
+  params: Promise<IParams>;
+}) {
+  const { locale } = await params;
+  const contactDict = await getTranslations({ locale, namespace: "contact" });
 
   return (
     <section>
@@ -79,6 +93,7 @@ export default async function ContactPage() {
         <div className="flex items-center justify-between gap-x-4">
           <p>{contactDict("qr_message")}</p>
           <Image
+            className="shadow-md"
             src="/images/qrcode.png"
             alt={contactDict("qr_alt")}
             width={100}

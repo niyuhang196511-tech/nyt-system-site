@@ -27,5 +27,5 @@ export const getMessage = async (
   if (res.code === 0) {
     return res.data;
   }
-  throw new Error(res.message || "Unknown error");
+  throw new Error(res.msg || "Unknown error");
 };

@@ -8,11 +8,30 @@ import {
 } from "@/lib/product-category";
 import { getProductsByCategoryId } from "@/lib/product";
 import { Metadata } from "next";
+import { routing } from "@/i18n/routing";
 
 interface IParams {
   locale: Locale;
   categoryId: string;
 }
+
+export const revalidate = 60;
+export const dynamicParams = false;
+export const dynamic = "force-static";
+
+export const generateStaticParams = async () => {
+  const params: { locale: Locale; categoryId: string }[] = [];
+  const locales = routing.locales as readonly Locale[];
+
+  for (const locale of locales) {
+    const categories = await getProductCategory(locale);
+    for (const c of categories) {
+      params.push({ locale, categoryId: String(c.id) });
+    }
+  }
+
+  return params;
+};
 
 export const generateMetadata = async ({
   params,
@@ -89,7 +108,7 @@ export default async function CateGoryPage({
   const products = await getProductsByCategoryId(categoryId, locale);
 
   return (
-    <section>
+    <section className="flex flex-col gap-10">
       <HeroBanner
         category={category}
         categories={categories}
