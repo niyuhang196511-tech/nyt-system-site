@@ -7,12 +7,13 @@
 - Lint: `npm run lint`
 - Build: `npm run build`
 - Production start: `npm run start`
-- Tests: no test script or test framework config is currently defined in this repo (`package.json` has no `test` script; no Jest/Vitest/Playwright config files found).
-- Single-test run: not available until a test runner is added.
+- Tests: no `npm test` script is defined in `package.json` and no test framework config is present.
+- Single-test run: not available in the current repo state.
 
 ## High-level architecture
 
 - Framework: Next.js App Router (Next 16, React 19, TypeScript) with locale-first routing under `src/app/[locale]/...`.
+- Entry flow: `src/app/page.tsx` statically redirects to `/${routing.defaultLocale}`; locale routing/matching is handled by `next-intl` middleware in `src/proxy.ts`.
 - Internationalization: `next-intl` is wired through:
   - `src/proxy.ts` middleware for locale-aware routing/matching
   - `src/i18n/routing.ts` for supported locales (`en-US`, `zh-CN`) and default locale (`zh-CN`)
@@ -21,7 +22,8 @@
 - Data layer: page/server components call API helper modules in `src/lib/*` (`product`, `news`, `company-news`, etc.), which fetch from `BASE_API` and pass required `tenant-id` headers.
 - Caching/rendering model:
   - Most lib fetches use `next: { revalidate: 60 }`
-  - Key route pages commonly use static generation patterns (`generateStaticParams`, `dynamic = "force-static"`, `dynamicParams = false`).
+  - Route segments under `[locale]` often pre-render with `generateStaticParams`; some pages enforce static output with `dynamic = "force-static"` and `dynamicParams = false`.
+  - Content detail pages (`news`, `company-news`) build static params from API list endpoints (large page sizes) before fetching item detail by ID.
 - Asset/media path strategy:
   - `next.config.ts` rewrites `/media/:path*` to `NEXT_PUBLIC_MINIO_REMOTE`
   - `src/lib/utils.ts` `toMediaUrl()` rewrites MinIO URLs back to `/media/...` for frontend-safe usage
@@ -35,6 +37,6 @@
   - Build query strings with `URLSearchParams`
   - Include `"tenant-id": TENANT_ID`
   - Parse backend envelope `{ code, data, msg }`
-  - Return typed defaults (`[]`, `{ list: [], total: 0 }`, etc.) or throw only where the module already does (e.g., `message.ts`).
+  - Return typed defaults (`[]`, `{ list: [], total: 0 }`, etc.); only throw where the module pattern already throws (`src/lib/message.ts`).
 - Prefer server-side data fetching in route/page modules and pass hydrated data into presentational components.
 - When rendering media URLs returned from backend storage, use `toMediaUrl()` instead of hardcoding remote MinIO origins.

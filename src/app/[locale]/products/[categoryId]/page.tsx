@@ -16,8 +16,6 @@ interface IParams {
 }
 
 export const revalidate = 60;
-export const dynamicParams = false;
-export const dynamic = "force-static";
 
 export const generateStaticParams = async () => {
   const params: { locale: Locale; categoryId: string }[] = [];
