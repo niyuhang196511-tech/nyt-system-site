@@ -1,5 +1,5 @@
 import { Locale } from "next-intl";
-import { BASE_API, TENANT_ID } from "@/constants/api";
+import { BASE_API, apiFetch } from "@/constants/api";
 import { Product } from "@/types/product";
 
 export const getProductRecommend = async (
@@ -8,23 +8,23 @@ export const getProductRecommend = async (
   const searchParams = new URLSearchParams({
     lang: locale,
   });
-  const res = await (
-    await fetch(
-      `${BASE_API}/site/product/recommend?${searchParams.toString()}`,
-      {
-        next: { revalidate: 60 },
-        headers: {
-          "tenant-id": TENANT_ID,
+  try {
+    const res = await (
+      await apiFetch(
+        `${BASE_API}/site/product/recommend?${searchParams.toString()}`,
+        {
+          next: { revalidate: 60 },
         },
-      },
-    )
-  ).json();
+      )
+    ).json();
 
-  if (res.code === 0) {
-    return res.data;
-  } else {
-    return [];
+    if (res.code === 0 && res.data) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error("[getProductRecommend]", e);
   }
+  return [];
 };
 
 export const getProductsByCategoryId = async (
@@ -35,23 +35,23 @@ export const getProductsByCategoryId = async (
     categoryId,
     lang: locale,
   });
-  const res = await (
-    await fetch(
-      `${BASE_API}/site/product/listByCategoryId?${searchParams.toString()}`,
-      {
-        next: { revalidate: 60 },
-        headers: {
-          "tenant-id": TENANT_ID,
+  try {
+    const res = await (
+      await apiFetch(
+        `${BASE_API}/site/product/listByCategoryId?${searchParams.toString()}`,
+        {
+          next: { revalidate: 60 },
         },
-      },
-    )
-  ).json();
+      )
+    ).json();
 
-  if (res.code === 0) {
-    return res.data;
-  } else {
-    return [];
+    if (res.code === 0 && res.data) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error("[getProductsByCategoryId]", e);
   }
+  return [];
 };
 
 export const getProductById = async (
@@ -61,18 +61,18 @@ export const getProductById = async (
   const searchParams = new URLSearchParams({
     lang: locale,
   });
-  const res = await (
-    await fetch(`${BASE_API}/site/product/${id}?${searchParams.toString()}`, {
-      next: { revalidate: 60 },
-      headers: {
-        "tenant-id": TENANT_ID,
-      },
-    })
-  ).json();
+  try {
+    const res = await (
+      await apiFetch(`${BASE_API}/site/product/${id}?${searchParams.toString()}`, {
+        next: { revalidate: 60 },
+      })
+    ).json();
 
-  if (res.code === 0) {
-    return res.data;
-  } else {
-    return {} as Product;
+    if (res.code === 0 && res.data) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error("[getProductById]", e);
   }
+  return {} as Product;
 };

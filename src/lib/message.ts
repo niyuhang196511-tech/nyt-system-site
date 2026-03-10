@@ -1,4 +1,4 @@
-import { BASE_API, TENANT_ID } from "@/constants/api";
+import { BASE_API, apiFetch } from "@/constants/api";
 
 export const getMessage = async (
   name: string,
@@ -8,9 +8,8 @@ export const getMessage = async (
   message: string,
 ): Promise<number> => {
   const res = await (
-    await fetch(`${BASE_API}/site/message`, {
+    await apiFetch(`${BASE_API}/site/message`, {
       headers: {
-        "tenant-id": TENANT_ID,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

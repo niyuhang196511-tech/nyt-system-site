@@ -1,4 +1,4 @@
-import { BASE_API, TENANT_ID } from "@/constants/api";
+import { BASE_API, apiFetch } from "@/constants/api";
 import { Locale } from "@/types/locale";
 import { ProductCategory } from "@/types/product";
 
@@ -12,23 +12,23 @@ export const getProductCategory = async (
   const searchParams = new URLSearchParams({
     lang: locale,
   });
-  const res = await (
-    await fetch(
-      `${BASE_API}/site/product-category/list?${searchParams.toString()}`,
-      {
-        next: { revalidate: 60 },
-        headers: {
-          "tenant-id": TENANT_ID,
+  try {
+    const res = await (
+      await apiFetch(
+        `${BASE_API}/site/product-category/list?${searchParams.toString()}`,
+        {
+          next: { revalidate: 60 },
         },
-      },
-    )
-  ).json();
+      )
+    ).json();
 
-  if (res.code === 0) {
-    return res.data;
-  } else {
-    return [];
+    if (res.code === 0 && res.data) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error("[getProductCategory]", e);
   }
+  return [];
 };
 
 /**
@@ -44,21 +44,21 @@ export const getProductCategoryById = async (
   const searchParams = new URLSearchParams({
     lang: locale,
   });
-  const res = await (
-    await fetch(
-      `${BASE_API}/site/product-category/${id}?${searchParams.toString()}`,
-      {
-        next: { revalidate: 60 },
-        headers: {
-          "tenant-id": TENANT_ID,
+  try {
+    const res = await (
+      await apiFetch(
+        `${BASE_API}/site/product-category/${id}?${searchParams.toString()}`,
+        {
+          next: { revalidate: 60 },
         },
-      },
-    )
-  ).json();
+      )
+    ).json();
 
-  if (res.code === 0) {
-    return res.data;
-  } else {
-    return {} as ProductCategory;
+    if (res.code === 0 && res.data) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error("[getProductCategoryById]", e);
   }
+  return {} as ProductCategory;
 };

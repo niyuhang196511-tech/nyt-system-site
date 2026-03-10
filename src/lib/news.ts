@@ -1,5 +1,5 @@
 import { Locale } from "next-intl";
-import { BASE_API, TENANT_ID } from "@/constants/api";
+import { BASE_API, apiFetch } from "@/constants/api";
 import { News } from "@/types/news";
 
 export const getNewsLatest = async (
@@ -12,20 +12,20 @@ export const getNewsLatest = async (
     pageNo: pageNo.toString(),
     pageSize: pageSize.toString(),
   });
-  const res = await (
-    await fetch(`${BASE_API}/site/news/latest?${searchParams.toString()}`, {
-      next: { revalidate: 60 },
-      headers: {
-        "tenant-id": TENANT_ID,
-      },
-    })
-  ).json();
+  try {
+    const res = await (
+      await apiFetch(`${BASE_API}/site/news/latest?${searchParams.toString()}`, {
+        next: { revalidate: 60 },
+      })
+    ).json();
 
-  if (res.code === 0 && res.data.list) {
-    return res.data.list;
-  } else {
-    return [];
+    if (res.code === 0 && res.data.list) {
+      return res.data.list;
+    }
+  } catch (e) {
+    console.error("[getNewsLatest]", e);
   }
+  return [];
 };
 
 export const getNewsList = async (
@@ -46,43 +46,40 @@ export const getNewsList = async (
     searchParams.append("categoryId", categoryId.toString());
   }
 
-  const res = await (
-    await fetch(`${BASE_API}/site/news/list?${searchParams.toString()}`, {
-      next: { revalidate: 60 },
-      headers: {
-        "tenant-id": TENANT_ID,
-      },
-    })
-  ).json();
+  try {
+    const res = await (
+      await apiFetch(`${BASE_API}/site/news/list?${searchParams.toString()}`, {
+        next: { revalidate: 60 },
+      })
+    ).json();
 
-  if (res.code === 0 && res.data.list) {
-    return {
-      list: res.data.list,
-      total: res.data.total,
-    };
-  } else {
-    return {
-      list: [],
-      total: 0,
-    };
+    if (res.code === 0 && res.data.list) {
+      return {
+        list: res.data.list,
+        total: res.data.total,
+      };
+    }
+  } catch (e) {
+    console.error("[getNewsList]", e);
   }
+  return { list: [], total: 0 };
 };
 
 export const getNews = async (id: number): Promise<News> => {
-  const res = await (
-    await fetch(`${BASE_API}/site/news/${id}`, {
-      next: { revalidate: 60 },
-      headers: {
-        "tenant-id": TENANT_ID,
-      },
-    })
-  ).json();
+  try {
+    const res = await (
+      await apiFetch(`${BASE_API}/site/news/${id}`, {
+        next: { revalidate: 60 },
+      })
+    ).json();
 
-  if (res.code === 0) {
-    return res.data;
-  } else {
-    return {} as News;
+    if (res.code === 0 && res.data) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error("[getNews]", e);
   }
+  return {} as News;
 };
 
 export const getRelatedNewsById = async (
@@ -97,27 +94,24 @@ export const getRelatedNewsById = async (
     pageSize: pageSize.toString(),
   });
 
-  const res = await (
-    await fetch(
-      `${BASE_API}/site/news/related/${id}?${searchParams.toString()}`,
-      {
-        next: { revalidate: 60 },
-        headers: {
-          "tenant-id": TENANT_ID,
+  try {
+    const res = await (
+      await apiFetch(
+        `${BASE_API}/site/news/related/${id}?${searchParams.toString()}`,
+        {
+          next: { revalidate: 60 },
         },
-      },
-    )
-  ).json();
+      )
+    ).json();
 
-  if (res.code === 0 && res.data.list) {
-    return {
-      list: res.data.list as News[],
-      total: res.data.total,
-    };
-  } else {
-    return {
-      list: [] as News[],
-      total: 0,
-    };
+    if (res.code === 0 && res.data.list) {
+      return {
+        list: res.data.list as News[],
+        total: res.data.total,
+      };
+    }
+  } catch (e) {
+    console.error("[getRelatedNewsById]", e);
   }
+  return { list: [] as News[], total: 0 };
 };

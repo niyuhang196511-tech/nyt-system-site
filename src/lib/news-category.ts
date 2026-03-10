@@ -1,4 +1,4 @@
-import { BASE_API, TENANT_ID } from "@/constants/api";
+import { BASE_API, apiFetch } from "@/constants/api";
 import { Locale } from "@/types/locale";
 import { NewsCategory } from "@/types/news";
 
@@ -12,23 +12,23 @@ export const getNewsCategory = async (
   const searchParams = new URLSearchParams({
     lang: locale,
   });
-  const res = await (
-    await fetch(
-      `${BASE_API}/site/news-category/list?${searchParams.toString()}`,
-      {
-        next: { revalidate: 60 },
-        headers: {
-          "tenant-id": TENANT_ID,
+  try {
+    const res = await (
+      await apiFetch(
+        `${BASE_API}/site/news-category/list?${searchParams.toString()}`,
+        {
+          next: { revalidate: 60 },
         },
-      },
-    )
-  ).json();
+      )
+    ).json();
 
-  if (res.code === 0) {
-    return res.data;
-  } else {
-    return [];
+    if (res.code === 0 && res.data) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error("[getNewsCategory]", e);
   }
+  return [];
 };
 
 /**
@@ -44,21 +44,21 @@ export const getNewsCategoryById = async (
   const searchParams = new URLSearchParams({
     lang: locale,
   });
-  const res = await (
-    await fetch(
-      `${BASE_API}/site/news-category/${id}?${searchParams.toString()}`,
-      {
-        next: { revalidate: 60 },
-        headers: {
-          "tenant-id": TENANT_ID,
+  try {
+    const res = await (
+      await apiFetch(
+        `${BASE_API}/site/news-category/${id}?${searchParams.toString()}`,
+        {
+          next: { revalidate: 60 },
         },
-      },
-    )
-  ).json();
+      )
+    ).json();
 
-  if (res.code === 0) {
-    return res.data;
-  } else {
-    return {} as NewsCategory;
+    if (res.code === 0 && res.data) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error("[getNewsCategoryById]", e);
   }
+  return {} as NewsCategory;
 };

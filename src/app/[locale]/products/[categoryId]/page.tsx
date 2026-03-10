@@ -45,7 +45,7 @@ export const generateMetadata = async ({
 
   const products = await getProductsByCategoryId(categoryId, locale);
 
-  const title = `${category.name}`;
+  const title = category.name || productDict("title");
   const description =
     productDict("description-1") + " " + productDict("description-2");
 

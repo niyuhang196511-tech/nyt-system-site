@@ -1,4 +1,4 @@
-import { BASE_API, TENANT_ID } from "@/constants/api";
+import { BASE_API, apiFetch } from "@/constants/api";
 import { Locale } from "@/types/locale";
 import { CompanyNews } from "@/types/company-news";
 
@@ -21,43 +21,41 @@ export const getCompanyNewsList = async (
     searchParams.append("title", search);
   }
 
-  const res = await (
-    await fetch(
-      `${BASE_API}/site/company-news/list?${searchParams.toString()}`,
-      {
-        next: { revalidate: 60 },
-        headers: {
-          "tenant-id": TENANT_ID,
+  try {
+    const res = await (
+      await apiFetch(
+        `${BASE_API}/site/company-news/list?${searchParams.toString()}`,
+        {
+          next: { revalidate: 60 },
         },
-      },
-    )
-  ).json();
+      )
+    ).json();
 
-  if (res.code === 0 && res.data.list) {
-    return {
-      list: res.data.list,
-      total: res.data.total,
-    };
+    if (res.code === 0 && res.data.list) {
+      return {
+        list: res.data.list,
+        total: res.data.total,
+      };
+    }
+  } catch (e) {
+    console.error("[getCompanyNewsList]", e);
   }
-  return {
-    list: [],
-    total: 0,
-  };
+  return { list: [], total: 0 };
 };
 
 export const getCompanyNews = async (id: number): Promise<CompanyNews> => {
-  const res = await (
-    await fetch(`${BASE_API}/site/company-news/${id}`, {
-      next: { revalidate: 60 },
-      headers: {
-        "tenant-id": TENANT_ID,
-      },
-    })
-  ).json();
+  try {
+    const res = await (
+      await apiFetch(`${BASE_API}/site/company-news/${id}`, {
+        next: { revalidate: 60 },
+      })
+    ).json();
 
-  if (res.code === 0) {
-    return res.data;
-  } else {
-    return {} as CompanyNews;
+    if (res.code === 0 && res.data) {
+      return res.data;
+    }
+  } catch (e) {
+    console.error("[getCompanyNews]", e);
   }
+  return {} as CompanyNews;
 };
