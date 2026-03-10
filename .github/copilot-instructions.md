@@ -25,7 +25,7 @@
   - Route segments under `[locale]` often pre-render with `generateStaticParams`; some pages enforce static output with `dynamic = "force-static"` and `dynamicParams = false`.
   - Content detail pages (`news`, `company-news`) build static params from API list endpoints (large page sizes) before fetching item detail by ID.
 - Asset/media path strategy:
-  - `next.config.ts` rewrites `/media/:path*` to `NEXT_PUBLIC_MINIO_REMOTE`
+  - `next.config.ts` rewrites `/media/:path*` to `NEXT_PUBLIC_MEDIA_REMOTE`
   - `src/lib/utils.ts` `toMediaUrl()` rewrites MinIO URLs back to `/media/...` for frontend-safe usage
   - `next.config.ts` also sets headers for `/draco/*` assets (from README’s Draco model-loading setup).
 

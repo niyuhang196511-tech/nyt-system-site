@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/media/:path*",
-        destination: `${process.env.NEXT_PUBLIC_MINIO_REMOTE}/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_MEDIA_REMOTE}/:path*`,
       },
     ];
   },
